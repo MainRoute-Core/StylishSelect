@@ -1,0 +1,1639 @@
+/*!
+ * StylishSelect
+ * An accessible, multi-thematic, dynamic drop-in replacement for native select elements.
+ * Built with absolute structural isolation, a high-performance rendering pipeline,
+ * custom animation drivers, and robust WAI-ARIA compliance.
+ * 
+ * Licensed under the GNU GENERAL PUBLIC LICENSE.
+ */
+
+:root {
+    --ss-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --ss-font-size: 14px;
+    --ss-bg: #ffffff;
+    --ss-color: #1a1a1a;
+    --ss-border-color: #d1d1d6;
+    --ss-border: 1px solid var(--ss-border-color);
+    --ss-radius: 8px;
+    --ss-list-radius: 8px;
+    --ss-padding: 10px 14px;
+    --ss-padding-right: 36px;
+    --ss-margin: 0;
+    --ss-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+    --ss-accent: #c32ced;
+    --ss-accent-color: #ffffff;
+    --ss-list-bg: var(--ss-bg);
+    --ss-list-color: var(--ss-color);
+    --ss-list-border: 1px solid var(--ss-border-color);
+    --ss-list-height: 280px;
+    --ss-list-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    --ss-hover-bg: #f2f2f7;
+    --ss-hover-color: var(--ss-color);
+    --ss-selected-bg: var(--ss-accent);
+    --ss-selected-color: var(--ss-accent-color);
+    --ss-focus-ring: 0 0 0 3px rgba(0, 122, 255, .25);
+    --ss-disabled-opacity: .45;
+    --ss-arrow-size: 6px;
+    --ss-arrow-color: #8e8e93;
+    --ss-icon-size: 1.25em;
+    --ss-icon-color: currentColor;
+    --ss-z-index: 1000;
+}
+
+/* Structural isolation of native selector */
+.ss-original {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    border: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Main Container - High-performance grid container */
+.ss-container {
+    display: inline-grid;
+    position: relative;
+    font-family: var(--ss-font-family);
+    font-size: var(--ss-font-size);
+    box-sizing: border-box;
+    text-align: left;
+    user-select: none;
+    margin: var(--ss-margin);
+}
+
+.ss-container *,
+.ss-container *:before,
+.ss-container *:after {
+    box-sizing: border-box;
+}
+
+.ss-label {
+    display: none !important;
+}
+
+/* Focusable Action Button */
+/*
+ * StylishSelect
+ * An accessible, multi-thematic, dynamic drop-in replacement for native select elements.
+ * Built with absolute structural isolation, a high-performance rendering pipeline,
+ * custom animation drivers, and robust WAI-ARIA compliance.
+ * 
+ * Licensed under the GNU GENERAL PUBLIC LICENSE.
+ */
+
+/* Main Container - Fully scopes default variable tokens directly inside the container */
+.ss-container {
+    --ss-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --ss-font-size: 14px;
+    --ss-bg: #ffffff;
+    --ss-color: #1a1a1a;
+    --ss-border-color: #d1d1d6;
+    --ss-border: 1px solid var(--ss-border-color);
+    --ss-radius: 8px;
+    --ss-list-radius: 8px;
+    --ss-padding: 10px 14px;
+    --ss-padding-right: 36px;
+    --ss-margin: 0;
+    --ss-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+    --ss-accent: #c32ced;
+    --ss-accent-color: #ffffff;
+    --ss-list-bg: var(--ss-bg);
+    --ss-list-color: var(--ss-color);
+    --ss-list-border: 1px solid var(--ss-border-color);
+    --ss-list-height: 280px;
+    --ss-list-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+    --ss-hover-bg: #f2f2f7;
+    --ss-hover-color: var(--ss-color);
+    --ss-selected-bg: var(--ss-accent);
+    --ss-selected-color: var(--ss-accent-color);
+    --ss-focus-ring: 0 0 0 3px rgba(0, 122, 255, .25);
+    --ss-disabled-opacity: .45;
+    --ss-arrow-size: 6px;
+    --ss-arrow-color: #8e8e93;
+    --ss-icon-size: 1.25em;
+    --ss-icon-color: currentColor;
+    --ss-z-index: 1000;
+
+    display: inline-grid;
+    position: relative;
+    font-family: var(--ss-font-family);
+    font-size: var(--ss-font-size);
+    box-sizing: border-box;
+    text-align: left;
+    user-select: none;
+    margin: var(--ss-margin);
+}
+
+.ss-container *,
+.ss-container *:before,
+.ss-container *:after {
+    box-sizing: border-box;
+}
+
+/* Structural isolation of native selector */
+.ss-original {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    border: 0 !important;
+    pointer-events: none !important;
+}
+
+.ss-label {
+    display: none !important;
+}
+
+/* Focusable Action Button */
+.ss-button {
+    grid-area: 1 / 1;
+    width: 100%;
+    display: flex !important;
+    align-items: center;
+    padding: var(--ss-padding);
+    padding-right: var(--ss-padding-right);
+    background-color: var(--ss-bg);
+    color: var(--ss-color);
+    border: var(--ss-border);
+    border-radius: var(--ss-radius);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    gap: .5rem;
+    cursor: pointer;
+    box-shadow: var(--ss-shadow);
+    outline: none;
+    position: relative;
+    transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.ss-button .ss-icon {
+    width: var(--ss-icon-size);
+    height: var(--ss-icon-size);
+    fill: var(--ss-icon-color);
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.ss-button>span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ss-button:hover:not([aria-disabled="true"]) {
+    border-color: var(--ss-accent);
+}
+
+/* Focus indicator isolation (active only under keyboard navigation) */
+.ss-keyboard-nav .ss-button:focus-visible,
+.ss-keyboard-nav .ss-button[aria-expanded="true"] {
+    border-color: var(--ss-accent);
+    box-shadow: var(--ss-focus-ring), var(--ss-shadow);
+}
+
+.ss-button[aria-disabled="true"] {
+    opacity: var(--ss-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Custom Dropdown Arrow Sizing */
+.ss-button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: var(--ss-arrow-size);
+    height: var(--ss-arrow-size);
+    border: solid var(--ss-arrow-color);
+    border-width: 0 1.5px 1.5px 0;
+    transform: translateY(-65%) rotate(45deg);
+    transition: transform var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease);
+    pointer-events: none;
+}
+
+.ss-button[aria-expanded="true"]::after {
+    transform: translateY(-25%) rotate(-135deg);
+}
+
+/* Dropdown Flyout Panel */
+.ss-dropdown {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: var(--ss-list-height);
+    margin-top: 4px;
+    padding: 4px;
+    background-color: var(--ss-list-bg);
+    color: var(--ss-list-color);
+    border: var(--ss-list-border);
+    border-radius: var(--ss-list-radius);
+    box-shadow: var(--ss-list-shadow);
+    z-index: var(--ss-z-index);
+    overflow-y: auto;
+    outline: none;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+.ss-top .ss-dropdown {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 4px;
+    transform-origin: bottom center;
+}
+
+/* Select Option Elements */
+.ss-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: calc(var(--ss-list-radius) - 2px);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    outline: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.ss-option .ss-icon {
+    width: var(--ss-icon-size);
+    height: var(--ss-icon-size);
+    fill: var(--ss-icon-color);
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.ss-option.ss-focused:not(.ss-disabled) {
+    background-color: var(--ss-hover-bg);
+    color: var(--ss-hover-color);
+}
+
+.ss-option[aria-selected="true"]:not(.ss-disabled) {
+    background-color: var(--ss-selected-bg);
+    color: var(--ss-selected-color);
+}
+
+.ss-option.ss-disabled {
+    opacity: var(--ss-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Performant Sizing Engine - Overlay matching width constraints */
+.ss-resize {
+    grid-area: 1 / 1;
+    display: block;
+    height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.ss-resize-template {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap !important;
+    padding: var(--ss-padding) !important;
+    padding-right: var(--ss-padding-right) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 0 !important;
+}
+
+/* Theme Variant Configurations */
+[data-ss-theme="light"] {
+    --ss-bg: #ffffff;
+    --ss-color: #1a1a1a;
+    --ss-border-color: #d1d1d6;
+    --ss-hover-bg: #f2f2f7;
+    --ss-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+}
+
+[data-ss-theme="dark"] {
+    --ss-bg: #1c1c1e;
+    --ss-color: #f2f2f7;
+    --ss-border-color: #3a3a3c;
+    --ss-hover-bg: #2c2c2e;
+    --ss-arrow-color: #8e8e93;
+    --ss-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+    --ss-list-shadow: 0 8px 32px rgba(0, 0, 0, .45);
+}
+
+[data-ss-theme="amoled"] {
+    --ss-bg: #000000;
+    --ss-color: #ffffff;
+    --ss-border-color: #262626;
+    --ss-hover-bg: #1a1a1a;
+    --ss-shadow: none;
+    --ss-list-shadow: 0 0 0 1px #262626;
+}
+
+[data-ss-theme="github"] {
+    --ss-bg: #ffffff;
+    --ss-color: #24292f;
+    --ss-border-color: #d0d7de;
+    --ss-accent: #0969da;
+    --ss-hover-bg: #f6f8fa;
+    --ss-radius: 6px;
+    --ss-list-radius: 6px;
+}
+
+[data-ss-theme="github"][data-ss-resolved-theme="dark"] {
+    --ss-bg: #0d1117;
+    --ss-color: #c9d1d9;
+    --ss-border-color: #30363d;
+    --ss-accent: #1f6feb;
+    --ss-hover-bg: #161b22;
+}
+
+[data-ss-theme="dracula"] {
+    --ss-bg: #282a36;
+    --ss-color: #f8f8f2;
+    --ss-border-color: #44475a;
+    --ss-accent: #bd93f9;
+    --ss-accent-color: #282a36;
+    --ss-hover-bg: #44475a;
+    --ss-arrow-color: #6272a4;
+}
+
+[data-ss-theme="nord"] {
+    --ss-bg: #2e3440;
+    --ss-color: #d8dee9;
+    --ss-border-color: #4c566a;
+    --ss-accent: #88c0d0;
+    --ss-accent-color: #2e3440;
+    --ss-hover-bg: #3b4252;
+    --ss-arrow-color: #4c566a;
+}
+
+[data-ss-theme="solarized"] {
+    --ss-bg: #fdf6e3;
+    --ss-color: #657b83;
+    --ss-border-color: #eee8d5;
+    --ss-accent: #268bd2;
+    --ss-hover-bg: #eee8d5;
+    --ss-arrow-color: #93a1a1;
+}
+
+[data-ss-theme="catppuccin"] {
+    --ss-bg: #1e1e2e;
+    --ss-color: #cdd6f4;
+    --ss-border-color: #313244;
+    --ss-accent: #cba6f7;
+    --ss-accent-color: #11111b;
+    --ss-hover-bg: #45475a;
+    --ss-arrow-color: #585b70;
+}
+
+[data-ss-theme="tokyo-night"] {
+    --ss-bg: #1a1b26;
+    --ss-color: #a9b1d6;
+    --ss-border-color: #383e56;
+    --ss-accent: #7aa2f7;
+    --ss-accent-color: #1a1b26;
+    --ss-hover-bg: #2f3549;
+    --ss-arrow-color: #444b6a;
+}
+
+[data-ss-theme="gruvbox"] {
+    --ss-bg: #282828;
+    --ss-color: #ebdbb2;
+    --ss-border-color: #504945;
+    --ss-accent: #fe8019;
+    --ss-accent-color: #282828;
+    --ss-hover-bg: #3c3836;
+    --ss-arrow-color: #a89984;
+}
+
+[data-ss-theme="material"] {
+    --ss-bg: #263238;
+    --ss-color: #eceff1;
+    --ss-border-color: #37474f;
+    --ss-accent: #80cbc4;
+    --ss-accent-color: #263238;
+    --ss-hover-bg: #37474f;
+    --ss-arrow-color: #90a4ae;
+}
+
+[data-ss-theme="one-dark"] {
+    --ss-bg: #282c34;
+    --ss-color: #abb2bf;
+    --ss-border-color: #3e4451;
+    --ss-accent: #61afef;
+    --ss-accent-color: #282c34;
+    --ss-hover-bg: #3e4451;
+    --ss-arrow-color: #5c6370;
+}
+
+[data-ss-theme="high-contrast"] {
+    --ss-bg: #000000;
+    --ss-color: #ffffff;
+    --ss-border-color: #ffffff;
+    --ss-border: 2px solid #ffffff;
+    --ss-accent: #ffff00;
+    --ss-accent-color: #000000;
+    --ss-hover-bg: #ffffff;
+    --ss-hover-color: #000000;
+    --ss-shadow: none;
+    --ss-list-shadow: none;
+}
+
+[data-ss-theme="auto"] {
+    --ss-bg: #ffffff;
+    --ss-color: #1a1a1a;
+    --ss-border-color: #d1d1d6;
+    --ss-hover-bg: #f2f2f7;
+    --ss-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-ss-theme="auto"] {
+        --ss-bg: #1c1c1e;
+        --ss-color: #f2f2f7;
+        --ss-border-color: #3a3a3c;
+        --ss-hover-bg: #2c2c2e;
+        --ss-arrow-color: #8e8e93;
+        --ss-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+        --ss-list-shadow: 0 8px 32px rgba(0, 0, 0, .45);
+    }
+}
+
+/* Style Variant Configurations */
+[data-ss-style="classic"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+}
+
+[data-ss-style="modern"] {
+    --ss-radius: 12px;
+    --ss-list-radius: 12px;
+    --ss-padding: 12px 18px;
+    --ss-shadow: 0 6px 16px rgba(0, 0, 0, .06);
+}
+
+[data-ss-style="rounded"] {
+    --ss-radius: 9999px;
+    --ss-list-radius: 16px;
+    --ss-padding: 10px 20px;
+}
+
+[data-ss-style="terminal"] {
+    --ss-font-family: "Courier New", Courier, monospace;
+    --ss-radius: 0;
+    --ss-list-radius: 0;
+    --ss-border: 1px solid currentColor;
+    --ss-accent: #00ff00;
+    --ss-accent-color: #000000;
+    --ss-hover-bg: #002200;
+    --ss-hover-color: #00ff00;
+    --ss-shadow: none;
+}
+
+[data-ss-style="retro"] {
+    --ss-radius: 0;
+    --ss-list-radius: 0;
+    --ss-bg: #c0c0c0;
+    --ss-color: #000000;
+    --ss-border: 2px solid;
+    --ss-border-color: #ffffff #808080 #404040 #ffffff;
+    --ss-hover-bg: #000080;
+    --ss-hover-color: #ffffff;
+    --ss-selected-bg: #000080;
+    --ss-selected-color: #ffffff;
+}
+
+[data-ss-style="retro"] .ss-button {
+    border-style: outset;
+    box-shadow: none;
+}
+
+[data-ss-style="retro"] .ss-button[aria-expanded="true"] {
+    border-style: inset;
+}
+
+[data-ss-style="retro"] .ss-dropdown {
+    border-style: outset;
+}
+
+[data-ss-style="neon"] {
+    --ss-radius: 6px;
+    --ss-list-radius: 6px;
+    --ss-border-color: #ff007f;
+    --ss-accent: #00f0ff;
+    --ss-accent-color: #000000;
+    --ss-hover-bg: rgba(0, 240, 255, .15);
+    --ss-hover-color: #00f0ff;
+    --ss-shadow: 0 0 10px rgba(255, 0, 127, .5);
+    --ss-list-shadow: 0 0 15px rgba(0, 240, 255, .4);
+}
+
+[data-ss-style="chrome"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-border-color: #dadce0;
+    --ss-accent: #1a73e8;
+    --ss-hover-bg: #f1f3f4;
+}
+
+[data-ss-style="firefox"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-border-color: #8f8f9d;
+    --ss-accent: #0060df;
+    --ss-hover-bg: #f0f0f4;
+}
+
+[data-ss-style="windows11"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 8px;
+    --ss-border-color: rgba(0, 0, 0, .08);
+    --ss-shadow: 0 2px 4px rgba(0, 0, 0, .04);
+}
+
+[data-ss-style="windows11"] .ss-button {
+    background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+    border-bottom: 2px solid rgba(0, 0, 0, .16);
+}
+
+[data-ss-style="windows11"] .ss-button:hover {
+    background: #f4f4f4;
+}
+
+[data-ss-style="android"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-border-color: #e0e0e0;
+    --ss-accent: #00e676;
+}
+
+[data-ss-style="ios"] {
+    --ss-radius: 10px;
+    --ss-list-radius: 14px;
+    --ss-font-family: -apple-system, SF Pro Text, sans-serif;
+    --ss-padding: 12px 16px;
+}
+
+[data-ss-style="md3"] {
+    --ss-radius: 16px;
+    --ss-list-radius: 12px;
+    --ss-border-color: #79747e;
+    --ss-accent: #6750a4;
+    --ss-accent-color: #ffffff;
+    --ss-hover-bg: #e8def8;
+}
+
+[data-ss-style="macos"] {
+    --ss-radius: 5px;
+    --ss-list-radius: 6px;
+    --ss-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    --ss-accent: #007aff;
+}
+
+[data-ss-style="macos"] .ss-button {
+    background: linear-gradient(#ffffff, #f5f5f5);
+}
+
+[data-ss-style="fluent"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 6px;
+    --ss-border-color: rgba(128, 128, 128, .35);
+}
+
+[data-ss-style="glass"] {
+    --ss-radius: 12px;
+    --ss-list-radius: 12px;
+    --ss-bg: rgba(255, 255, 255, .15);
+    --ss-border-color: rgba(255, 255, 255, .25);
+    --ss-list-bg: rgba(255, 255, 255, .15);
+    --ss-list-border: 1px solid rgba(255, 255, 255, .2);
+}
+
+[data-ss-style="glass"] .ss-button,
+[data-ss-style="glass"] .ss-dropdown {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+[data-ss-style="minimal"] {
+    --ss-radius: 0;
+    --ss-list-radius: 0;
+    --ss-border: none;
+    --ss-shadow: none;
+    --ss-list-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+}
+
+[data-ss-style="minimal"] .ss-button {
+    border-bottom: 2px solid var(--ss-border-color);
+}
+
+[data-ss-style="compact"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-padding: 6px 10px;
+    --ss-font-size: 12px;
+}
+
+/* Base Animation Transitions */
+.ss-dropdown {
+    transition: opacity var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease),
+        transform var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease),
+        filter var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease);
+}
+
+/* Animation Variant Configurations */
+[data-ss-anim="fade"] .ss-dropdown {
+    opacity: 0;
+}
+
+[data-ss-anim="fade"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+}
+
+[data-ss-anim="scale"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(.9);
+}
+
+[data-ss-anim="scale"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+}
+
+[data-ss-anim="zoom"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(.7);
+}
+
+[data-ss-anim="zoom"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="slide"] .ss-dropdown {
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+[data-ss-anim="slide"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-ss-anim="slide"].ss-top .ss-dropdown {
+    transform: translateY(-12px);
+}
+
+[data-ss-anim="slide"].ss-top .ss-dropdown.ss-animate-in {
+    transform: translateY(0);
+}
+
+[data-ss-anim="grow"] .ss-dropdown {
+    opacity: 0;
+    transform: scaleY(0);
+}
+
+[data-ss-anim="grow"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+[data-ss-anim="shrink"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+[data-ss-anim="shrink"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="rotate"] .ss-dropdown {
+    opacity: 0;
+    transform: rotate(-5deg);
+}
+
+[data-ss-anim="rotate"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+[data-ss-anim="blur"] .ss-dropdown {
+    opacity: 0;
+    filter: blur(8px);
+}
+
+[data-ss-anim="blur"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    filter: blur(0);
+}
+
+[data-ss-anim="float"] .ss-dropdown {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+[data-ss-anim="float"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-ss-anim="pop"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(.85);
+}
+
+[data-ss-anim="pop"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="drop"] .ss-dropdown {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+[data-ss-anim="drop"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-ss-anim="expand"] .ss-dropdown {
+    opacity: 0;
+    transform: scaleX(.9);
+}
+
+[data-ss-anim="expand"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+[data-ss-anim="collapse"] .ss-dropdown {
+    opacity: 0;
+    transform: scaleY(.9) scaleX(.9);
+}
+
+[data-ss-anim="collapse"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scaleY(1) scaleX(1);
+}
+
+[data-ss-anim="bounce"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-bounce var(--ss-anim-duration, .35s) cubic-bezier(.175, .885, .32, 1.275) forwards;
+}
+
+@keyframes ss-keyframe-bounce {
+    0% {
+        opacity: 0;
+        transform: scale(.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+[data-ss-anim="flip"] .ss-dropdown {
+    perspective: 800px;
+}
+
+[data-ss-anim="flip"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-flip var(--ss-anim-duration, .3s) ease-out forwards;
+}
+
+@keyframes ss-keyframe-flip {
+    0% {
+        opacity: 0;
+        transform: rotateX(-70deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
+}
+
+[data-ss-anim="swing"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-swing var(--ss-anim-duration, .35s) ease-out forwards;
+}
+
+@keyframes ss-keyframe-swing {
+    0% {
+        opacity: 0;
+        transform: rotate(-10deg);
+        transform-origin: top left;
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+}
+
+[data-ss-anim="elastic"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-elastic var(--ss-anim-duration, .4s) cubic-bezier(.25, 1.1, .5, 1.15) forwards;
+}
+
+@keyframes ss-keyframe-elastic {
+    0% {
+        opacity: 0;
+        transform: scale(.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+[data-ss-anim="fold"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-fold var(--ss-anim-duration, .3s) ease-out forwards;
+}
+
+@keyframes ss-keyframe-fold {
+    0% {
+        opacity: 0;
+        transform: rotateX(-90deg);
+        transform-origin: top center;
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
+}
+
+[data-ss-anim="none"] .ss-dropdown {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+
+    .ss-dropdown,
+    .ss-button::after {
+        --ss-anim-duration: 0ms !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+.ss-button>span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ss-button:hover:not([aria-disabled="true"]) {
+    border-color: var(--ss-accent);
+}
+
+/* Focus indicator isolation (active only under keyboard navigation) */
+.ss-keyboard-nav .ss-button:focus-visible,
+.ss-keyboard-nav .ss-button[aria-expanded="true"] {
+    border-color: var(--ss-accent);
+    box-shadow: var(--ss-focus-ring), var(--ss-shadow);
+}
+
+.ss-button[aria-disabled="true"] {
+    opacity: var(--ss-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Custom Dropdown Arrow Sizing */
+.ss-button::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: var(--ss-arrow-size);
+    height: var(--ss-arrow-size);
+    border: solid var(--ss-arrow-color);
+    border-width: 0 1.5px 1.5px 0;
+    transform: translateY(-65%) rotate(45deg);
+    transition: transform var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease);
+    pointer-events: none;
+}
+
+.ss-button[aria-expanded="true"]::after {
+    transform: translateY(-25%) rotate(-135deg);
+}
+
+/* Dropdown Flyout Panel */
+.ss-dropdown {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: var(--ss-list-height);
+    margin-top: 4px;
+    padding: 4px;
+    background-color: var(--ss-list-bg);
+    color: var(--ss-list-color);
+    border: var(--ss-list-border);
+    border-radius: var(--ss-list-radius);
+    box-shadow: var(--ss-list-shadow);
+    z-index: var(--ss-z-index);
+    overflow-y: auto;
+    outline: none;
+    transform-origin: top center;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+
+.ss-top .ss-dropdown {
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: 4px;
+    transform-origin: bottom center;
+}
+
+/* Select Option Elements */
+.ss-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: calc(var(--ss-list-radius) - 2px);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    outline: none;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.ss-option .ss-icon {
+    width: var(--ss-icon-size);
+    height: var(--ss-icon-size);
+    fill: var(--ss-icon-color);
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.ss-option.ss-focused:not(.ss-disabled) {
+    background-color: var(--ss-hover-bg);
+    color: var(--ss-hover-color);
+}
+
+.ss-option[aria-selected="true"]:not(.ss-disabled) {
+    background-color: var(--ss-selected-bg);
+    color: var(--ss-selected-color);
+}
+
+.ss-option.ss-disabled {
+    opacity: var(--ss-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Performant Sizing Engine - Overlay matching width constraints */
+.ss-resize {
+    grid-area: 1 / 1;
+    display: block;
+    height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.ss-resize-template {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap !important;
+    padding: var(--ss-padding) !important;
+    padding-right: var(--ss-padding-right) !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 0 !important;
+}
+
+/* Theme Variant Configurations */
+[data-ss-theme="light"] {
+    --ss-bg: #ffffff;
+    --ss-color: #1a1a1a;
+    --ss-border-color: #d1d1d6;
+    --ss-hover-bg: #f2f2f7;
+    --ss-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+}
+
+[data-ss-theme="dark"] {
+    --ss-bg: #1c1c1e;
+    --ss-color: #f2f2f7;
+    --ss-border-color: #3a3a3c;
+    --ss-hover-bg: #2c2c2e;
+    --ss-arrow-color: #8e8e93;
+    --ss-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+    --ss-list-shadow: 0 8px 32px rgba(0, 0, 0, .45);
+}
+
+[data-ss-theme="amoled"] {
+    --ss-bg: #000000;
+    --ss-color: #ffffff;
+    --ss-border-color: #262626;
+    --ss-hover-bg: #1a1a1a;
+    --ss-shadow: none;
+    --ss-list-shadow: 0 0 0 1px #262626;
+}
+
+[data-ss-theme="github"] {
+    --ss-bg: #ffffff;
+    --ss-color: #24292f;
+    --ss-border-color: #d0d7de;
+    --ss-accent: #0969da;
+    --ss-hover-bg: #f6f8fa;
+    --ss-radius: 6px;
+    --ss-list-radius: 6px;
+}
+
+[data-ss-theme="github"][data-ss-resolved-theme="dark"],
+[data-ss-theme="github"] [data-ss-resolved-theme="dark"] {
+    --ss-bg: #0d1117;
+    --ss-color: #c9d1d9;
+    --ss-border-color: #30363d;
+    --ss-accent: #1f6feb;
+    --ss-hover-bg: #161b22;
+}
+
+[data-ss-theme="dracula"] {
+    --ss-bg: #282a36;
+    --ss-color: #f8f8f2;
+    --ss-border-color: #44475a;
+    --ss-accent: #bd93f9;
+    --ss-accent-color: #282a36;
+    --ss-hover-bg: #44475a;
+    --ss-arrow-color: #6272a4;
+}
+
+[data-ss-theme="nord"] {
+    --ss-bg: #2e3440;
+    --ss-color: #d8dee9;
+    --ss-border-color: #4c566a;
+    --ss-accent: #88c0d0;
+    --ss-accent-color: #2e3440;
+    --ss-hover-bg: #3b4252;
+    --ss-arrow-color: #4c566a;
+}
+
+[data-ss-theme="solarized"] {
+    --ss-bg: #fdf6e3;
+    --ss-color: #657b83;
+    --ss-border-color: #eee8d5;
+    --ss-accent: #268bd2;
+    --ss-hover-bg: #eee8d5;
+    --ss-arrow-color: #93a1a1;
+}
+
+[data-ss-theme="catppuccin"] {
+    --ss-bg: #1e1e2e;
+    --ss-color: #cdd6f4;
+    --ss-border-color: #313244;
+    --ss-accent: #cba6f7;
+    --ss-accent-color: #11111b;
+    --ss-hover-bg: #45475a;
+    --ss-arrow-color: #585b70;
+}
+
+[data-ss-theme="tokyo-night"] {
+    --ss-bg: #1a1b26;
+    --ss-color: #a9b1d6;
+    --ss-border-color: #383e56;
+    --ss-accent: #7aa2f7;
+    --ss-accent-color: #1a1b26;
+    --ss-hover-bg: #2f3549;
+    --ss-arrow-color: #444b6a;
+}
+
+[data-ss-theme="gruvbox"] {
+    --ss-bg: #282828;
+    --ss-color: #ebdbb2;
+    --ss-border-color: #504945;
+    --ss-accent: #fe8019;
+    --ss-accent-color: #282828;
+    --ss-hover-bg: #3c3836;
+    --ss-arrow-color: #a89984;
+}
+
+[data-ss-theme="material"] {
+    --ss-bg: #263238;
+    --ss-color: #eceff1;
+    --ss-border-color: #37474f;
+    --ss-accent: #80cbc4;
+    --ss-accent-color: #263238;
+    --ss-hover-bg: #37474f;
+    --ss-arrow-color: #90a4ae;
+}
+
+[data-ss-theme="one-dark"] {
+    --ss-bg: #282c34;
+    --ss-color: #abb2bf;
+    --ss-border-color: #3e4451;
+    --ss-accent: #61afef;
+    --ss-accent-color: #282c34;
+    --ss-hover-bg: #3e4451;
+    --ss-arrow-color: #5c6370;
+}
+
+[data-ss-theme="high-contrast"] {
+    --ss-bg: #000000;
+    --ss-color: #ffffff;
+    --ss-border-color: #ffffff;
+    --ss-border: 2px solid #ffffff;
+    --ss-accent: #ffff00;
+    --ss-accent-color: #000000;
+    --ss-hover-bg: #ffffff;
+    --ss-hover-color: #000000;
+    --ss-shadow: none;
+    --ss-list-shadow: none;
+}
+
+[data-ss-theme="auto"][data-ss-resolved-theme="dark"],
+[data-ss-theme="auto"] [data-ss-resolved-theme="dark"] {
+    --ss-bg: #1c1c1e;
+    --ss-color: #f2f2f7;
+    --ss-border-color: #3a3a3c;
+    --ss-hover-bg: #2c2c2e;
+    --ss-arrow-color: #8e8e93;
+    --ss-shadow: 0 4px 16px rgba(0, 0, 0, .3);
+    --ss-list-shadow: 0 8px 32px rgba(0, 0, 0, .45);
+}
+
+/* Style Variant Configurations */
+[data-ss-style="classic"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+}
+
+[data-ss-style="modern"] {
+    --ss-radius: 12px;
+    --ss-list-radius: 12px;
+    --ss-padding: 12px 18px;
+    --ss-shadow: 0 6px 16px rgba(0, 0, 0, .06);
+}
+
+[data-ss-style="rounded"] {
+    --ss-radius: 9999px;
+    --ss-list-radius: 16px;
+    --ss-padding: 10px 20px;
+}
+
+[data-ss-style="terminal"] {
+    --ss-font-family: "Courier New", Courier, monospace;
+    --ss-radius: 0;
+    --ss-list-radius: 0;
+    --ss-border: 1px solid currentColor;
+    --ss-accent: #00ff00;
+    --ss-accent-color: #000000;
+    --ss-hover-bg: #002200;
+    --ss-hover-color: #00ff00;
+    --ss-shadow: none;
+}
+
+[data-ss-style="retro"] {
+    --ss-radius: 0;
+    --ss-list-radius: 0;
+    --ss-bg: #c0c0c0;
+    --ss-color: #000000;
+    --ss-border: 2px solid;
+    --ss-border-color: #ffffff #808080 #404040 #ffffff;
+    --ss-hover-bg: #000080;
+    --ss-hover-color: #ffffff;
+    --ss-selected-bg: #000080;
+    --ss-selected-color: #ffffff;
+}
+
+[data-ss-style="retro"] .ss-button {
+    border-style: outset;
+    box-shadow: none;
+}
+
+[data-ss-style="retro"] .ss-button[aria-expanded="true"] {
+    border-style: inset;
+}
+
+[data-ss-style="retro"] .ss-dropdown {
+    border-style: outset;
+}
+
+[data-ss-style="neon"] {
+    --ss-radius: 6px;
+    --ss-list-radius: 6px;
+    --ss-border-color: #ff007f;
+    --ss-accent: #00f0ff;
+    --ss-accent-color: #000000;
+    --ss-hover-bg: rgba(0, 240, 255, .15);
+    --ss-hover-color: #00f0ff;
+    --ss-shadow: 0 0 10px rgba(255, 0, 127, .5);
+    --ss-list-shadow: 0 0 15px rgba(0, 240, 255, .4);
+}
+
+[data-ss-style="chrome"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-border-color: #dadce0;
+    --ss-accent: #1a73e8;
+    --ss-hover-bg: #f1f3f4;
+}
+
+[data-ss-style="firefox"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-border-color: #8f8f9d;
+    --ss-accent: #0060df;
+    --ss-hover-bg: #f0f0f4;
+}
+
+[data-ss-style="windows11"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 8px;
+    --ss-border-color: rgba(0, 0, 0, .08);
+    --ss-shadow: 0 2px 4px rgba(0, 0, 0, .04);
+}
+
+[data-ss-style="windows11"] .ss-button {
+    background: linear-gradient(to bottom, #ffffff, #f9f9f9);
+    border-bottom: 2px solid rgba(0, 0, 0, .16);
+}
+
+[data-ss-style="windows11"] .ss-button:hover {
+    background: #f4f4f4;
+}
+
+[data-ss-style="android"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-border-color: #e0e0e0;
+    --ss-accent: #00e676;
+}
+
+[data-ss-style="ios"] {
+    --ss-radius: 10px;
+    --ss-list-radius: 14px;
+    --ss-font-family: -apple-system, SF Pro Text, sans-serif;
+    --ss-padding: 12px 16px;
+}
+
+[data-ss-style="md3"] {
+    --ss-radius: 16px;
+    --ss-list-radius: 12px;
+    --ss-border-color: #79747e;
+    --ss-accent: #6750a4;
+    --ss-accent-color: #ffffff;
+    --ss-hover-bg: #e8def8;
+}
+
+[data-ss-style="macos"] {
+    --ss-radius: 5px;
+    --ss-list-radius: 6px;
+    --ss-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    --ss-accent: #007aff;
+}
+
+[data-ss-style="macos"] .ss-button {
+    background: linear-gradient(#ffffff, #f5f5f5);
+}
+
+[data-ss-style="fluent"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 6px;
+    --ss-border-color: rgba(128, 128, 128, .35);
+}
+
+[data-ss-style="glass"] {
+    --ss-radius: 12px;
+    --ss-list-radius: 12px;
+    --ss-bg: rgba(255, 255, 255, .15);
+    --ss-border-color: rgba(255, 255, 255, .25);
+    --ss-list-bg: rgba(255, 255, 255, .15);
+    --ss-list-border: 1px solid rgba(255, 255, 255, .2);
+}
+
+[data-ss-style="glass"] .ss-button,
+[data-ss-style="glass"] .ss-dropdown {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+[data-ss-style="minimal"] {
+    --ss-radius: 0;
+    --ss-list-radius: 0;
+    --ss-border: none;
+    --ss-shadow: none;
+    --ss-list-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+}
+
+[data-ss-style="minimal"] .ss-button {
+    border-bottom: 2px solid var(--ss-border-color);
+}
+
+[data-ss-style="compact"] {
+    --ss-radius: 4px;
+    --ss-list-radius: 4px;
+    --ss-padding: 6px 10px;
+    --ss-font-size: 12px;
+}
+
+/* Base Animation Transitions */
+.ss-dropdown {
+    transition: opacity var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease),
+        transform var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease),
+        filter var(--ss-anim-duration, .2s) var(--ss-anim-easing, ease);
+}
+
+/* Animation Variant Configurations */
+[data-ss-anim="fade"] .ss-dropdown {
+    opacity: 0;
+}
+
+[data-ss-anim="fade"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+}
+
+[data-ss-anim="scale"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(.9);
+}
+
+[data-ss-anim="scale"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="zoom"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(.7);
+}
+
+[data-ss-anim="zoom"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="slide"] .ss-dropdown {
+    opacity: 0;
+    transform: translateY(12px);
+}
+
+[data-ss-anim="slide"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-ss-anim="slide"].ss-top .ss-dropdown {
+    transform: translateY(-12px);
+}
+
+[data-ss-top="slide"].ss-top .ss-dropdown.ss-animate-in {
+    transform: translateY(0);
+}
+
+[data-ss-anim="grow"] .ss-dropdown {
+    opacity: 0;
+    transform: scaleY(0);
+}
+
+[data-ss-anim="grow"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+[data-ss-anim="shrink"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+[data-ss-anim="shrink"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="rotate"] .ss-dropdown {
+    opacity: 0;
+    transform: rotate(-5deg);
+}
+
+[data-ss-anim="rotate"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+[data-ss-anim="blur"] .ss-dropdown {
+    opacity: 0;
+    filter: blur(8px);
+}
+
+[data-ss-anim="blur"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    filter: blur(0);
+}
+
+[data-ss-anim="float"] .ss-dropdown {
+    opacity: 0;
+    transform: translateY(6px);
+}
+
+[data-ss-anim="float"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-ss-anim="pop"] .ss-dropdown {
+    opacity: 0;
+    transform: scale(.85);
+}
+
+[data-ss-anim="pop"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+[data-ss-anim="drop"] .ss-dropdown {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+[data-ss-anim="drop"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-ss-anim="expand"] .ss-dropdown {
+    opacity: 0;
+    transform: scaleX(.9);
+}
+
+[data-ss-anim="expand"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+[data-ss-anim="collapse"] .ss-dropdown {
+    opacity: 0;
+    transform: scaleY(.9) scaleX(.9);
+}
+
+[data-ss-anim="collapse"] .ss-dropdown.ss-animate-in {
+    opacity: 1;
+    transform: scaleY(1) scaleX(1);
+}
+
+[data-ss-anim="bounce"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-bounce var(--ss-anim-duration, .35s) cubic-bezier(.175, .885, .32, 1.275) forwards;
+}
+
+@keyframes ss-keyframe-bounce {
+    0% {
+        opacity: 0;
+        transform: scale(.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+[data-ss-anim="flip"] .ss-dropdown {
+    perspective: 800px;
+}
+
+[data-ss-anim="flip"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-flip var(--ss-anim-duration, .3s) ease-out forwards;
+}
+
+@keyframes ss-keyframe-flip {
+    0% {
+        opacity: 0;
+        transform: rotateX(-70deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
+}
+
+[data-ss-anim="swing"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-swing var(--ss-anim-duration, .35s) ease-out forwards;
+}
+
+@keyframes ss-keyframe-swing {
+    0% {
+        opacity: 0;
+        transform: rotate(-10deg);
+        transform-origin: top left;
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotate(0deg);
+    }
+}
+
+[data-ss-anim="elastic"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-elastic var(--ss-anim-duration, .4s) cubic-bezier(.25, 1.1, .5, 1.15) forwards;
+}
+
+@keyframes ss-keyframe-elastic {
+    0% {
+        opacity: 0;
+        transform: scale(.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+[data-ss-anim="fold"] .ss-dropdown.ss-animate-in {
+    animation: ss-keyframe-fold var(--ss-anim-duration, .3s) ease-out forwards;
+}
+
+@keyframes ss-keyframe-fold {
+    0% {
+        opacity: 0;
+        transform: rotateX(-90deg);
+        transform-origin: top center;
+    }
+
+    100% {
+        opacity: 1;
+        transform: rotateX(0deg);
+    }
+}
+
+[data-ss-anim="none"] .ss-dropdown {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+
+    :root,
+    .ss-dropdown,
+    .ss-button::after {
+        --ss-anim-duration: 0ms !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+:-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    margin-block:5px;}
+
+::-webkit-scrollbar-thumb {
+    background: var(--ss-accent);
+    border-radius: 20px;
+    cursor: grab;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: var(--ss-hover-color);
+    cursor: grabbing;
+}
