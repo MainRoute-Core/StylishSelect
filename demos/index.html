@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Explore rich interactive configurations of StylishSelect, showcasing custom color schemes, terminal displays, and Fluent UI elements." />
+    <meta name="keywords" content="select, dropdown, UI styles, web engineering, accessibility, WAI-ARIA, interactive demos, responsive elements" />
+    <meta name="author" content="StylishSelect" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://MainRoute-Core.github.io/StylishSelect/demos" />
+    <meta property="og:title" content="Interactive Demos | StylishSelect" />
+    <meta property="og:description" content="Explore live design presets, customized templates, and interactive configuration panels for StylishSelect." />
+    <meta property="og:image" content="../src/social-.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Interactive Demos | StylishSelect" />
+    <meta name="twitter:description" content="Explore live design presets, customized templates, and interactive configuration panels for StylishSelect." />
+    <meta name="twitter:image" content="../src/social-.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemPage",
+        "name": "Interactive Demos Gallery",
+        "description": "A showcase of custom styling paradigms, themes, and interactive animations using StylishSelect.",
+        "url": "https://MainRoute-Core.github.io/StylishSelect/demos",
+        "mainEntity": {
+          "@type": "SoftwareApplication",
+          "name": "StylishSelect",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "All modern web browsers"
+        }
+      }
+    </script>
+
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="canonical" href="https://MainRoute-Core.github.io/StylishSelect/">
+    <link rel="shortcut icon" type="image/x-icon" sizes="any" href="../favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="../src/16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../src/32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="../src/48.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="../src/64.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="../src/144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../src/192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../src/512.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../src/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="../dist/stylishselect.min.css" />
+
+    <title>Interactive Demos | StylishSelect</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --primary: #c32ced;
+            --primary-hover: #a01fd1;
+            --bg: #ffffff;
+            --bg-gradient-top: #fae8ff;
+            --bg-gradient-bottom: #fcf8fc;
+            --bg-soft: #faf8fc;
+            --bg-card: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --nav-bg: rgba(255, 255, 255, 0.86);
+            --nav-hover: #fdf4ff;
+            --badge-bg: #fdf4ff;
+            --input-bg: #ffffff;
+            --code-bg: #1e1b29;
+            --code-text: #f3e8ff;
+            --scrollbar: #4a3758;
+            --shadow: 0 15px 40px rgba(15, 23, 42, 0.05);
+            --shadow-hover: 0 24px 60px rgba(15, 23, 42, 0.1);
+            --radius: 18px;
+            --radius-sm: 12px;
+            --container: 1320px;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0b0714;
+                --bg-gradient-top: #3b0764;
+                --bg-gradient-bottom: #090514;
+                --bg-soft: #141021;
+                --bg-card: #141021;
+                --text: #f5f3f7;
+                --muted: #948fa8;
+                --border: #2d263f;
+                --nav-bg: rgba(11, 7, 20, 0.82);
+                --nav-hover: #2a1b3d;
+                --badge-bg: #2a1b3d;
+                --input-bg: #2a1b3d;
+                --code-bg: #090514;
+                --code-text: #f3e8ff;
+                --scrollbar: #5c437a;
+                --shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+                --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, var(--bg-gradient-top) 0%, transparent 35%), linear-gradient(var(--bg), var(--bg-gradient-bottom));
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex: none;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            max-width: var(--container);
+            height: 72px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 20px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: 0.25s;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            background: var(--nav-hover);
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: var(--container);
+            margin: auto;
+            padding: 50px 30px 70px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-bottom: 45px;
+        }
+
+        .page-icon {
+            width: 70px;
+            height: 70px;
+            display: grid;
+            place-items: center;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #c32ced, #df7bf2);
+            color: #fff;
+        }
+
+        .page-icon .icon {
+            width: 28px;
+            height: 28px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            max-width: 700px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        .demo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 26px;
+            box-shadow: var(--shadow);
+            transition: 0.25s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .demo-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .demo-head h2 {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .demo-badge {
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--badge-bg);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .demo-card p {
+            color: var(--muted);
+            margin-bottom: 20px;
+            min-height: 48px;
+        }
+
+        .demo-preview {
+            background: var(--bg-soft);
+            border: 1px dashed var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 22px;
+            min-height: 110px;
+        }
+
+        .demo-preview .ss-container {
+            width: 240px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border-radius: 14px;
+            overflow: auto;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        code {
+            font-size: 13px;
+            font-family: Consolas, monospace;
+            color: var(--code-text);
+        }
+
+        pre::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        pre::-webkit-scrollbar-thumb {
+            background: var(--scrollbar);
+            border-radius: 99px;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-header h1 {
+                font-size: 34px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 18px 50px;
+            }
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .demo-card {
+                padding: 20px;
+            }
+
+            .demo-preview {
+                padding: 24px;
+            }
+
+            .demo-preview .ss-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <defs>
+        <symbol id="icon-home" viewBox="0 0 24 24">
+          <path d="M24 13.839l-12-9.315-12 9.315v-3.798l12-9.315 12 9.315zM21 13.5v9h-6v-6h-6v6h-6v-9l9-6.75z"></path>
+        </symbol>
+        <symbol id="icon-layout" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none" />
+          <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="2" />
+          <line x1="9" y1="21" x2="9" y2="9" stroke="currentColor" stroke-width="2" />
+        </symbol>
+        <symbol id="icon-settings" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none" />
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2" fill="none" />
+        </symbol>
+        <symbol id="icon-folder" viewBox="0 0 24 24">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" fill="none" />
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" fill="none" />
+          <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" fill="none" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <header>
+        <nav class="navbar">
+            <a href="../" class="logo">
+                <img class="logo-icon" src="../src/512.png" alt="ColorPickUp Logo">
+                StylishSelect
+            </a>
+            <div class="nav-links">
+                <a href="../">Quick Start</a>
+                <a href="../demos/" class="active">Demos</a>
+                <a href="../setup/">Sandbox Builder</a>
+                <a href="../events/">Schema & Events</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <div class="page-icon">
+                <svg class="icon">
+                    <use href="#icon-layout"></use>
+                </svg>
+            </div>
+            <div>
+                <h1>Interactive Demo Gallery</h1>
+                <p>
+                    Explore modular styling engines, smooth transition frameworks, and customized API layouts. Every dropdown supports seamless keyboard cycling out-of-the-box.
+                </p>
+            </div>
+        </section>
+
+        <section class="demo-grid">
+            <!-- Demo 1: Standard Classic Dropdown -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Standard Classic</h2>
+                    <span class="demo-badge">Default</span>
+                </div>
+                <p>Standard dropdown block styled with classic layout guidelines.</p>
+                <div class="demo-preview">
+                    <select class="demo-standard">
+                        <option value="us" data-icon="#icon-home">United States</option>
+                        <option value="ca" data-icon="#icon-home">Canada</option>
+                        <option value="gb" data-icon="#icon-home">United Kingdom</option>
+                        <option value="au" data-icon="#icon-home">Australia</option>
+                        <option value="de" data-icon="#icon-home">Germany</option>
+                        <option value="fr" data-icon="#icon-home">France</option>
+                        <option value="jp" data-icon="#icon-home">Japan</option>
+                        <option value="cn" data-icon="#icon-home">China</option>
+                        <option value="in" data-icon="#icon-home" selected>India</option>
+                        <option value="br" data-icon="#icon-home">Brazil</option>
+                        <option value="za" data-icon="#icon-home">South Africa</option>
+                        <option value="nz" data-icon="#icon-home">New Zealand</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'classic',
+  theme: 'light',
+  animation: 'zoom'
+});</code></pre>
+            </article>
+
+            <!-- Demo 2: Glass UI Dark -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Glass UI Dark</h2>
+                    <span class="demo-badge">Style</span>
+                </div>
+                <p>Glassmorphism dropdown block with translucent elements.</p>
+                <div class="demo-preview">
+                    <select class="demo-glass-dark">
+                        <option value="js" data-icon="#icon-settings">JavaScript</option>
+                        <option value="ts" data-icon="#icon-settings" selected>TypeScript</option>
+                        <option value="python" data-icon="#icon-settings">Python</option>
+                        <option value="rust" data-icon="#icon-settings">Rust</option>
+                        <option value="golang" data-icon="#icon-settings">Go Lang</option>
+                        <option value="ruby" data-icon="#icon-settings">Ruby</option>
+                        <option value="csharp" data-icon="#icon-settings">C-Sharp</option>
+                        <option value="swift" data-icon="#icon-settings">Swift</option>
+                        <option value="php" data-icon="#icon-settings">PHP</option>
+                        <option value="kotlin" data-icon="#icon-settings">Kotlin</option>
+                        <option value="dart" data-icon="#icon-settings">Dart</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'glass',
+  theme: 'dark',
+  animation: 'fade'
+});</code></pre>
+            </article>
+
+            <!-- Demo 3: Glass UI Light -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Glass UI Light</h2>
+                    <span class="demo-badge">Style</span>
+                </div>
+                <p>Glassmorphism dropdown block with subtle light backgrounds.</p>
+                <div class="demo-preview">
+                    <select class="demo-glass-light">
+                        <option value="sketch" data-icon="#icon-layout">Sketch Design</option>
+                        <option value="figma" data-icon="#icon-layout" selected>Figma Suite</option>
+                        <option value="adobe" data-icon="#icon-layout">Adobe XD</option>
+                        <option value="framerex" data-icon="#icon-layout">Framer Pro</option>
+                        <option value="invision" data-icon="#icon-layout">InVision</option>
+                        <option value="penpot" data-icon="#icon-layout">Penpot App</option>
+                        <option value="miro" data-icon="#icon-layout">Miro Board</option>
+                        <option value="mural" data-icon="#icon-layout">Mural Workspace</option>
+                        <option value="axure" data-icon="#icon-layout">Axure RP</option>
+                        <option value="balsamiq" data-icon="#icon-layout">Balsamiq Mockups</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'glass',
+  theme: 'light',
+  animation: 'fade'
+});</code></pre>
+            </article>
+
+            <!-- Demo 4: macOS Inspired -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>macOS Theme</h2>
+                    <span class="demo-badge">macOS</span>
+                </div>
+                <p>Subtle native-like OS element inspired by macOS layouts.</p>
+                <div class="demo-preview">
+                    <select class="demo-macos">
+                        <option value="general" data-icon="#icon-settings">General Settings</option>
+                        <option value="appearance" data-icon="#icon-settings" selected>Appearance Preferences</option>
+                        <option value="sidebar" data-icon="#icon-settings">Sidebar Options</option>
+                        <option value="notifications" data-icon="#icon-settings">Notifications Hub</option>
+                        <option value="focus" data-icon="#icon-settings">Focus Profiles</option>
+                        <option value="screentime" data-icon="#icon-settings">Screen Time Metrics</option>
+                        <option value="desktop" data-icon="#icon-settings">Desktop Wallpaper</option>
+                        <option value="screensaver" data-icon="#icon-settings">Screen Saver Modules</option>
+                        <option value="battery" data-icon="#icon-settings">Battery Utility</option>
+                        <option value="security" data-icon="#icon-settings">Security Protocols</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'macos',
+  theme: 'light',
+  animation: 'bounce'
+});</code></pre>
+            </article>
+
+            <!-- Demo 5: Retro Terminal -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Terminal Console</h2>
+                    <span class="demo-badge">Retro</span>
+                </div>
+                <p>Console-inspired monospaced green element block.</p>
+                <div class="demo-preview">
+                    <select class="demo-terminal">
+                        <option value="cat">cat /etc/passwd</option>
+                        <option value="ls" selected>ls -la /var/log</option>
+                        <option value="grep">grep -rnw "ss"</option>
+                        <option value="chmod">chmod +x execute.sh</option>
+                        <option value="ssh">ssh root@server.ip</option>
+                        <option value="ping">ping -c 4 local.host</option>
+                        <option value="systemctl">systemctl status httpd</option>
+                        <option value="docker">docker ps -a</option>
+                        <option value="git">git commit -m "update"</option>
+                        <option value="top">top -o %CPU</option>
+                        <option value="curl">curl -I secure.org</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'terminal',
+  theme: 'dark',
+  animation: 'none'
+});</code></pre>
+            </article>
+
+            <!-- Demo 6: Windows 11 Fluent -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Windows 11 Fluent</h2>
+                    <span class="demo-badge">Fluent</span>
+                </div>
+                <p>Fluent-design select box with dynamic theme mapping.</p>
+                <div class="demo-preview">
+                    <select class="demo-fluent">
+                        <option value="word" data-icon="#icon-folder">Microsoft Word</option>
+                        <option value="excel" data-icon="#icon-folder">Microsoft Excel</option>
+                        <option value="powerpoint" data-icon="#icon-folder" selected>Microsoft PowerPoint</option>
+                        <option value="outlook" data-icon="#icon-folder">Microsoft Outlook</option>
+                        <option value="teams" data-icon="#icon-folder">Microsoft Teams</option>
+                        <option value="oneNote" data-icon="#icon-folder">Microsoft OneNote</option>
+                        <option value="onedrive" data-icon="#icon-folder">Microsoft OneDrive</option>
+                        <option value="sharepoint" data-icon="#icon-folder">Microsoft SharePoint</option>
+                        <option value="access" data-icon="#icon-folder">Microsoft Access</option>
+                        <option value="publisher" data-icon="#icon-folder">Microsoft Publisher</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'windows11',
+  theme: 'auto',
+  animation: 'float'
+});</code></pre>
+            </article>
+
+            <!-- Demo 7: Material Design 3 -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Material Design 3</h2>
+                    <span class="demo-badge">MD3</span>
+                </div>
+                <p>Beautiful Material Design 3 layout with rounded edges.</p>
+                <div class="demo-preview">
+                    <select class="demo-md3">
+                        <option value="primary" data-icon="#icon-user">Primary Colorway</option>
+                        <option value="secondary" data-icon="#icon-user">Secondary Palette</option>
+                        <option value="tertiary" data-icon="#icon-user" selected>Tertiary Accents</option>
+                        <option value="neutral" data-icon="#icon-user">Neutral Shades</option>
+                        <option value="surface" data-icon="#icon-user">Surface Backgrounds</option>
+                        <option value="outline" data-icon="#icon-user">Outline Styling</option>
+                        <option value="error" data-icon="#icon-user">Error Signals</option>
+                        <option value="success" data-icon="#icon-user">Success Indicators</option>
+                        <option value="warning" data-icon="#icon-user">Warning Markers</option>
+                        <option value="info" data-icon="#icon-user">Information Banners</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'md3',
+  theme: 'light',
+  animation: 'pop'
+});</code></pre>
+            </article>
+
+            <!-- Demo 8: Isolated Overrides -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Isolated Custom</h2>
+                    <span class="demo-badge">API</span>
+                </div>
+                <p>Programmatic theme overrides targeting specific properties.</p>
+                <div class="demo-preview">
+                    <select class="demo-custom">
+                        <option value="cabernet" data-icon="#icon-folder">Cabernet Sauvignon</option>
+                        <option value="merlot" data-icon="#icon-folder">Merlot Reserve</option>
+                        <option value="pinot" data-icon="#icon-folder" selected>Pinot Noir Vintage</option>
+                        <option value="syrah" data-icon="#icon-folder">Syrah Premium</option>
+                        <option value="zinfandel" data-icon="#icon-folder">Zinfandel Classic</option>
+                        <option value="chardonnay" data-icon="#icon-folder">Chardonnay Oak</option>
+                        <option value="sauvignon" data-icon="#icon-folder">Sauvignon Blanc</option>
+                        <option value="riesling" data-icon="#icon-folder">Riesling Dry</option>
+                        <option value="prosecco" data-icon="#icon-folder">Prosecco Sparkling</option>
+                        <option value="champagne" data-icon="#icon-folder">Champagne Brut</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'modern',
+  theme: 'light',
+  animation: 'elastic',
+  customStyles: {
+    bg: '#312e81',
+    color: '#ffffff',
+    accent: '#f59e0b',
+    hoverBg: '#4338ca'
+  }
+});</code></pre>
+            </article>
+
+            <!-- Demo 9: Soft Minimalist -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Soft Minimalist</h2>
+                    <span class="demo-badge">Minimal</span>
+                </div>
+                <p>Borderless bottom-lined modern interaction selection.</p>
+                <div class="demo-preview">
+                    <select class="demo-minimal">
+                        <option value="serif">Serif Typography</option>
+                        <option value="sans-serif" selected>Sans-Serif Modern</option>
+                        <option value="monospace">Monospace Standard</option>
+                        <option value="display">Display Bold</option>
+                        <option value="cursive">Cursive Elegant</option>
+                        <option value="fantasy">Fantasy Creative</option>
+                        <option value="slab-serif">Slab Serif Thick</option>
+                        <option value="grotesque">Grotesque Standard</option>
+                        <option value="geometric">Geometric Clean</option>
+                        <option value="humanist">Humanist Rounded</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'minimal',
+  theme: 'auto',
+  animation: 'shrink'
+});</code></pre>
+            </article>
+
+            <!-- Demo 10: Retrowave Retro -->
+            <article class="demo-card">
+                <div class="demo-head">
+                    <h2>Retro 95 Desktop</h2>
+                    <span class="demo-badge">Retro 3D</span>
+                </div>
+                <p>Classic 3D inset/outset retrowave style block.</p>
+                <div class="demo-preview">
+                    <select class="demo-retro">
+                        <option value="win31">Windows 3.1 Edition</option>
+                        <option value="win95" selected>Windows 95 OS</option>
+                        <option value="win98">Windows 98 OS</option>
+                        <option value="win2000">Windows 2000 Pro</option>
+                        <option value="winme">Windows Millennium</option>
+                        <option value="winxp">Windows XP Professional</option>
+                        <option value="winvista">Windows Vista Business</option>
+                        <option value="win7">Windows 7 Ultimate</option>
+                        <option value="win8">Windows 8.1 OS</option>
+                        <option value="win10">Windows 10 Pro</option>
+                    </select>
+                </div>
+                <pre><code>StylishSelect.create('.select', {
+  style: 'retro',
+  theme: 'light',
+  animation: 'none'
+});</code></pre>
+            </article>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem 1rem; border-top: 1px solid var(--border); margin-top: 50px;">
+        &copy; <span id="year">2026</span>
+        <a style="color: var(--primary); text-decoration: none" href="#">MainRoute Core</a>
+        • All Rights Reserved. &bull;
+        <a style="color: var(--primary); text-decoration: none" href="https://github.com/Pro-Bandey">Pro Bandey</a>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+    <script src="../dist/stylishselect.min.js"></script>
+    <script>
+        // Demo 1: Standard Classic
+        StylishSelect.create(".demo-standard", {
+            style: "classic",
+            theme: "light",
+            animation: "zoom"
+        });
+
+        // Demo 2: Glass UI Dark
+        StylishSelect.create(".demo-glass-dark", {
+            style: "glass",
+            theme: "dark",
+            animation: "fade"
+        });
+
+        // Demo 3: Glass UI Light
+        StylishSelect.create(".demo-glass-light", {
+            style: "glass",
+            theme: "light",
+            animation: "fade"
+        });
+
+        // Demo 4: macOS Inspired
+        StylishSelect.create(".demo-macos", {
+            style: "macos",
+            theme: "light",
+            animation: "bounce"
+        });
+
+        // Demo 5: Retro Terminal
+        StylishSelect.create(".demo-terminal", {
+            style: "terminal",
+            theme: "dark",
+            animation: "none"
+        });
+
+        // Demo 6: Windows 11 Fluent
+        StylishSelect.create(".demo-fluent", {
+            style: "windows11",
+            theme: "auto",
+            animation: "float"
+        });
+
+        // Demo 7: Material Design 3
+        StylishSelect.create(".demo-md3", {
+            style: "md3",
+            theme: "light",
+            animation: "pop"
+        });
+
+        // Demo 8: Isolated Custom Overrides
+        StylishSelect.create(".demo-custom", {
+            style: "modern",
+            theme: "light",
+            animation: "elastic",
+            customStyles: {
+                bg: "#312e81",
+                color: "#ffffff",
+                accent: "#f59e0b",
+                accentColor: "#1e1b4b",
+                hoverBg: "#4338ca",
+                hoverColor: "#ffffff",
+                radius: "16px"
+            }
+        });
+
+        // Demo 9: Soft Minimalist
+        StylishSelect.create(".demo-minimal", {
+            style: "minimal",
+            theme: "auto",
+            animation: "shrink"
+        });
+
+        // Demo 10: Retrowave Retro 3D
+        StylishSelect.create(".demo-retro", {
+            style: "retro",
+            theme: "light",
+            animation: "none"
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="View complete API schema definitions, configuration variables, and custom bubbled DOM event structures for StylishSelect." />
+  <meta name="keywords" content="API reference, JavaScript events, custom select schema, bubbled events, developer terminal, developer logs" />
+  <meta name="author" content="StylishSelect" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://MainRoute-Core.github.io/StylishSelect/events" />
+  <meta property="og:title" content="API Schema & Events | StylishSelect" />
+  <meta property="og:description" content="Detailed API specifications and live interactive event logging console for developers integrating StylishSelect." />
+  <meta property="og:image" content="../src/social-.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="API Schema & Events | StylishSelect" />
+  <meta name="twitter:description" content="Detailed API specifications and live interactive event logging console for developers integrating StylishSelect." />
+  <meta name="twitter:image" content="../src/social-.png" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemPage",
+      "name": "API Schema & Events Reference",
+      "description": "API variables tables, standard parameter types, and custom DOM bubbled event hooks for StylishSelect.",
+      "url": "https://MainRoute-Core.github.io/StylishSelect/events",
+      "mainEntity": {
+          "@type": "SoftwareApplication",
+          "name": "StylishSelect",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "All modern web browsers"
+        }
+    }
+  </script>
+
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="canonical" href="https://MainRoute-Core.github.io/StylishSelect/">
+  <link rel="shortcut icon" type="image/x-icon" sizes="any" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="../src/16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../src/32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="../src/48.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="../src/64.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="../src/144.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../src/192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../src/512.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../src/apple-touch-icon.png">
+
+  <link rel="stylesheet" type="text/css" href="../dist/stylishselect.min.css">
+  <title>API Schema & Events — StylishSelect</title>
+  
+  <style>:root{ color-scheme: light dark; --primary: #c32ced; --primary-hover: #a01fd1; --bg: #ffffff; --bg-gradient-top: #fae8ff; --bg-gradient-bottom: #fcf8fc; --bg-soft: #faf8fc; --bg-card: #ffffff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --nav-bg: rgba(255, 255, 255, 0.86); --nav-hover: #fdf4ff; --badge-bg: #fdf4ff; --input-bg: #ffffff; --code-bg: #1e1b29; --code-text: #f3e8ff; --scrollbar: #4a3758; --shadow: 0 15px 40px rgba(15, 23, 42, 0.05); --shadow-hover: 0 24px 60px rgba(15, 23, 42, 0.1); --radius: 18px; --radius-sm: 12px; --container: 1320px; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;} @media (prefers-color-scheme: dark){ :root{ --bg: #0b0714; --bg-gradient-top: #3b0764; --bg-gradient-bottom: #090514; --bg-soft: #141021; --bg-card: #141021; --text: #f5f3f7; --muted: #948fa8; --border: #2d263f; --nav-bg: rgba(11, 7, 20, 0.82); --nav-hover: #2a1b3d; --badge-bg: #2a1b3d; --input-bg: #2a1b3d; --code-bg: #090514; --code-text: #f3e8ff; --scrollbar: #5c437a; --shadow: 0 15px 40px rgba(0, 0, 0, 0.45); --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.6);}} *{ margin: 0; padding: 0; box-sizing: border-box;} html{ scroll-behavior: smooth;} body{ background: radial-gradient(circle at top right, var(--bg-gradient-top) 0%, transparent 35%), linear-gradient(var(--bg), var(--bg-gradient-bottom)); color: var(--text); font-size: 15px; line-height: 1.7; min-height: 100vh;} .ss-nav{ position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border);} .navbar{ max-width: var(--container); height: 72px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 30px;} .logo{ display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 800; text-decoration: none; color: var(--text);} .logo-icon{ width: 40px; height: 40px; color: var(--primary);} .nav-links{ display: flex; gap: 10px;} .nav-links a{ text-decoration: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; color: var(--muted); transition: 0.25s;} .nav-links a:hover, .nav-links .active{ background: var(--nav-hover); color: var(--primary);} .container{ max-width: var(--container); margin: 2rem auto; padding: 0 30px 4rem; display: grid; grid-template-columns: 1fr; gap: 2rem;} @media(min-width: 900px){ .container{ grid-template-columns: 1.2fr 0.8fr;}} .card{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 1.5rem;} .card h2{ margin-top: 0; font-size: 22px; font-weight: 700; border-bottom: 1.5px solid var(--border); padding-bottom: 0.75rem;} .schema-table{ width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;} .schema-table th, .schema-table td{ padding: 1rem; border-bottom: 1px solid var(--border);} .schema-table th{ font-weight: 700; background: var(--bg-soft); color: var(--text);} .schema-table td{ color: var(--text);} .code-term{ font-family: Consolas, monospace; color: var(--primary); background: var(--badge-bg); padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 13px; font-weight: 600;} .interactive-logger{ display: flex; flex-direction: column; gap: 1.25rem;} .interactive-logger .ss-container{ width: 100%;} .log-terminal{ background: var(--code-bg); color: #a6e3a1; font-family: Consolas, monospace; font-size: 13px; padding: 1.25rem; border-radius: 12px; height: 300px; overflow-y: auto; border: 1px solid var(--border);} .log-line{ margin-bottom: 0.5rem; border-bottom: 1px dashed rgba(255, 255, 255, 0.08); padding-bottom: 0.3rem; line-height: 1.6;} .log-time{ color: #cba6f7;} .btn-clear{ padding: 0.6rem 1.2rem; background: var(--primary); color: var(--bg-card); border: none; border-radius: 8px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background 0.2s;} .btn-clear:hover{ background: var(--primary-hover);} @media (max-width: 768px){ .nav-links{ display: none;} .card{ padding: 1.75rem;} .schema-table{ font-size: 13px;} .schema-table th, .schema-table td{ padding: 0.75rem;}} </style>
+</head>
+<body>
+
+  <nav class="ss-nav">
+    <div class="navbar">
+      <a href="../" class="logo">
+       <img class="logo-icon" src="../src/512.png" alt="ColorPickUp Logo">
+        StylishSelect
+      </a>
+      <div class="nav-links">
+        <a href="../">Quick Start</a>
+        <a href="../demos/">Demos</a>
+        <a href="../setup/">Sandbox Builder</a>
+        <a href="../events/" class="active">Schema & Events</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    
+    <section class="card">
+      <h2>API Configuration Schema</h2>
+      <div style="overflow-x: auto;">
+        <table class="schema-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="code-term">theme</span></td>
+              <td>String</td>
+              <td>'auto'</td>
+              <td>Selected dynamic theme scheme palette to output. Options include Auto, Light, Dark, Amoled, Dracula, Nord, etc.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">style</span></td>
+              <td>String</td>
+              <td>'classic'</td>
+              <td>Structural curves, margins, padding scale, focus ring layout options.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">animation</span></td>
+              <td>Object / String</td>
+              <td>{...}</td>
+              <td>Opening and closing hardware-accelerated transition profiles and durations.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">searchable</span></td>
+              <td>Boolean</td>
+              <td>true</td>
+              <td>Enables typing-based character searches on active elements.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">storage</span></td>
+              <td>Boolean</td>
+              <td>true</td>
+              <td>Persists active selection states via localStorage.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">customStyles</span></td>
+              <td>Object</td>
+              <td>{}</td>
+              <td>Direct inline CSS variables injector overrides (supports bg, color, accent, radius, padding, etc.).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="margin-top: 1.5rem;">Custom Bubbled Events</h2>
+      <div style="overflow-x: auto;">
+        <table class="schema-table">
+          <thead>
+            <tr>
+              <th>Event Name</th>
+              <th>Target Elements</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="code-term">ss:open</span></td>
+              <td>Original Select</td>
+              <td>Triggers immediately prior to opening animations.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">ss:close</span></td>
+              <td>Original Select</td>
+              <td>Dispatched once closing animations finish.</td>
+            </tr>
+            <tr>
+              <td><span class="code-term">ss:change</span></td>
+              <td>Original Select</td>
+              <td>Dispatched on selection change. Event metadata is bundled on <code>event.detail</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Real-time Event Logger Panel -->
+    <section class="card">
+      <h2>Live Custom Events Terminal</h2>
+      <p style="color: var(--muted); font-size: 14.5px;">Interact with the active StylishSelect element below to inspect custom event outputs in the console panel:</p>
+      
+      <div class="interactive-logger">
+        <select id="log-target" stylish-select="modern dracula elastic">
+          <option value="alpha">Alpha Stream Server</option>
+          <option value="beta">Beta Backup Host</option>
+          <option value="gamma">Gamma Deployment Node</option>
+        </select>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; gap: 0.75rem;">
+          <h3 style="margin: 0; font-size: 14.5px;">Dynamic State Logger Console</h3>
+          <button id="clear-logger-btn" class="btn-clear">Clear Console</button>
+        </div>
+
+        <div id="terminal" class="log-terminal">
+          <div class="log-line"><span class="log-time">[System]</span> Terminal observer connected... waiting for events.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="margin-top: 90px;border-top: 1px solid var(--border);padding: 26px;text-align: center;color: var(--muted);">
+    © <span id="year">2026</span> <a style="color: var(--primary);text-decoration: none;" href="https://MainRoute-Core.github.io">MainRoute Core</a> • All Rights Reserved. • <a style="color: var(--primary);text-decoration: none;" href="https://Pro-Bandey.github.io">Pro Bandey</a>
+  </footer>
+  <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="../dist/stylishselect.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const select = document.getElementById('log-target');
+      const terminal = document.getElementById('terminal');
+      const clearBtn = document.getElementById('clear-logger-btn');
+
+      function appendLog(eventName, metadata = '') {
+        const timestamp = new Date().toLocaleTimeString();
+        const logLine = document.createElement('div');
+        logLine.className = 'log-line';
+        logLine.innerHTML = `<span class="log-time">[${timestamp}]</span> <strong>${eventName}</strong> ${metadata}`;
+        terminal.appendChild(logLine);
+        terminal.scrollTop = terminal.scrollHeight;
+      }
+
+      select.addEventListener('ss:open', () => {
+        appendLog('ss:open', '— Menu open animation initialized.');
+      });
+
+      select.addEventListener('ss:close', () => {
+        appendLog('ss:close', '— Menu close animation completed.');
+      });
+
+      select.addEventListener('ss:change', (e) => {
+        const detail = e.detail;
+        appendLog('ss:change', `— Selected Value: <span style="color: #89b4fa;">"${detail.value}"</span> | Label: <span style="color: #f9e2af;">"${detail.text}"</span>`);
+      });
+
+      clearBtn.addEventListener('click', () => {
+        terminal.innerHTML = '<div class="log-line"><span class="log-time">[System]</span> Log cleared. Observing state transitions...</div>';
+      });
+    });
+  </script>
+</body>
+</html>

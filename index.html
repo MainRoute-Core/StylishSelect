@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="Quick start guide for StylishSelect. Learn how to drop native selector controls and replace them with auto-observing custom select lists." />
+    <meta name="keywords" content="select replacement, drop-in select, vanilla JS, customizable UI, fluent, accessible" />
+    <meta name="author" content="StylishSelect" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://MainRoute-Core.github.io/StylishSelect/" />
+    <meta property="og:title" content="Quick Start | StylishSelect" />
+    <meta property="og:description" content="Integrate declarative accessibility configurations and customizable styling engines in modern form modules." />
+    <meta property="og:image" content="src/social-.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Quick Start | StylishSelect" />
+    <meta name="twitter:description" content="Integrate declarative accessibility configurations and customizable styling engines in modern form modules." />
+    <meta name="twitter:image" content="src/social-.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web Browser",
+        "name": "StylishSelect",
+        "url": "https://github.com/Pro-Bandey/StylishSelect",
+        "description": "StylishSelect is a modular, fast, and accessible custom select replacement featuring automated mutation tracking.",
+        "author": {
+          "@type": "Person",
+          "name": "Pro Bandey"
+        }
+      }
+    </script>
+
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="canonical" href="https://MainRoute-Core.github.io/StylishSelect">
+    <link rel="shortcut icon" type="image/x-icon" sizes="any" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="./src/16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./src/32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="./src/48.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="./src/64.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="./src/144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./src/192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./src/512.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="./src/apple-touch-icon.png">
+
+    <link rel="stylesheet" type="text/css" href="dist/stylishselect.min.css">
+    
+    <title>Quick Start — StylishSelect</title>
+
+    <style>:root{ color-scheme: light dark; --primary: #c32ced; --primary-hover: #a01fd1; --bg: #ffffff; --bg-gradient-top: #fae8ff; --bg-gradient-bottom: #fcf8fc; --bg-soft: #faf8fc; --bg-card: #ffffff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --nav-bg: rgba(255, 255, 255, 0.86); --nav-hover: #fdf4ff; --badge-bg: #fdf4ff; --input-bg: #ffffff; --code-bg: #1e1b29; --code-text: #f3e8ff; --scrollbar: #4a3758; --shadow: 0 15px 40px rgba(15, 23, 42, 0.05); --shadow-hover: 0 24px 60px rgba(15, 23, 42, 0.1); --radius: 18px; --radius-sm: 12px; --container: 1320px; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;} @media (prefers-color-scheme: dark){ :root{ --bg: #0b0714; --bg-gradient-top: #3b0764; --bg-gradient-bottom: #090514; --bg-soft: #141021; --bg-card: #141021; --text: #f5f3f7; --muted: #948fa8; --border: #2d263f; --nav-bg: rgba(11, 7, 20, 0.82); --nav-hover: #2a1b3d; --badge-bg: #2a1b3d; --input-bg: #2a1b3d; --code-bg: #090514; --code-text: #f3e8ff; --scrollbar: #5c437a; --shadow: 0 15px 40px rgba(0, 0, 0, 0.45); --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.6);}} *{ margin: 0; padding: 0; box-sizing: border-box;} html{ scroll-behavior: smooth;} body{ background: radial-gradient(circle at top right, var(--bg-gradient-top) 0%, transparent 35%), linear-gradient(var(--bg), var(--bg-gradient-bottom)); color: var(--text); font-size: 15px; line-height: 1.7; min-height: 100vh;} .ss-nav{ position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border);} .navbar{ max-width: var(--container); height: 72px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 30px;} .logo{ display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 800; text-decoration: none; color: var(--text);} .logo-icon{ width: 40px; height: 40px; color: var(--primary);} .nav-links{ display: flex; gap: 10px;} .nav-links a{ text-decoration: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; color: var(--muted); transition: 0.25s;} .nav-links a:hover, .nav-links .active{ background: var(--nav-hover); color: var(--primary);} .hero{ text-align: center; padding: 5rem 2rem 3rem; max-width: 800px; margin: auto;} .hero h1{ font-size: 42px; letter-spacing: -0.03em; margin: 15px 0; font-weight: 800;} .hero p{ font-size: 17px; color: var(--muted); margin-bottom: 2rem; line-height: 1.8;} .main-content{ max-width: 900px; margin: 0 auto; padding: 0 20px 4rem;} .card{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; margin-bottom: 2rem; box-shadow: var(--shadow); transition: 0.25s;} .card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-hover);} h2{ margin-top: 0; font-weight: 700; border-bottom: 1.5px solid var(--border); padding-bottom: 0.75rem; margin-bottom: 1.25rem; font-size: 22px;} pre{ background: var(--code-bg); border-radius: 14px; overflow: auto; padding: 20px; margin-top: 1rem;} code{ font-size: 13.5px; font-family: Consolas, monospace; color: var(--code-text);} pre code{ background: none; padding: 0;} .interactive-showcase{ display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;} .interactive-showcase label{ font-size: 16px; color: var(--text);} .badge{ display: inline-block; background: var(--badge-bg); color: var(--primary); padding: 6px 14px; border-radius: 9999px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;} @media (max-width: 768px){ .nav-links{ display: none;} .hero h1{ font-size: 32px;} .card{ padding: 1.75rem;}} </style>
+</head>
+<body>
+
+  <nav class="ss-nav">
+    <div class="navbar">
+        <a href="./" class="logo">
+                <img class="logo-icon" src="./src/512.png" alt="ColorPickUp Logo">
+                StylishSelect
+        </a>
+        <div class="nav-links">
+            <a href="./" class="active">Quick Start</a>
+            <a href="./demos/">Demos</a>
+            <a href="./setup/">Sandbox Builder</a>
+            <a href="./events/">Schema & Events</a>
+        </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="badge">v1.0.0 Release</span>
+    <h1>Declarative Elegance for Form Controls</h1>
+    <p>A feature-rich, modular replacement for native select elements. Beautiful by default, responsive under pressure, and accessible to everyone.</p>
+  </header>
+
+  <main class="main-content">
+    <section class="card">
+      <h2>Step 1: Link Assets</h2>
+      <p>Include the minified stylesheet and JavaScript module inside your document structure. These resources can be loaded from your local build outputs directory:</p>
+      <pre><code>&lt;!-- Include within document head --&gt;
+&lt;link rel="stylesheet" href="dist/stylishselect.min.css"&gt;
+
+&lt;!-- Include before close of body --&gt;
+&lt;script src="dist/stylishselect.min.js"&gt;&lt;/script&gt;</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Step 2: Declarative Setup</h2>
+      <p>Simply append the <code>stylish-select</code> attribute to any standard select tag. The dynamic Mutation Observer scans and initializes the element automatically:</p>
+      <pre><code>&lt;select stylish-select&gt;
+  &lt;option value="nord"&gt;Nord Theme&lt;/option&gt;
+  &lt;option value="dracula"&gt;Dracula Theme&lt;/option&gt;
+  &lt;option value="tokyo"&gt;Tokyo Night Theme&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+    </section>
+
+    <section class="card">
+      <h2>Live Core Example</h2>
+      <p>Interact with the automatically rendered StylishSelect control below:</p>
+      <div class="interactive-showcase">
+        <label for="demo-showcase" style="font-weight: 600;">Choose Design Paradigm:</label>
+        <select id="demo-showcase" stylish-select="modern rounded fade">
+          <option value="adaptive">Adaptive Micro-spacing</option>
+          <option value="minimalist">Minimalist Layout</option>
+          <option value="fluent">Fluent Design Language</option>
+          <option value="glass">Glassmorphism Overlay</option>
+        </select>
+      </div>
+    </section>
+  </main>
+  <footer style="margin-top: 90px;border-top: 1px solid var(--border);padding: 26px;text-align: center;color: var(--muted);">
+    © <span id="year">2026</span> <a style="color: var(--primary);text-decoration: none;" href="https://MainRoute-Core.github.io">MainRoute Core</a> • All Rights Reserved. • <a style="color: var(--primary);text-decoration: none;" href="https://Pro-Bandey.github.io">Pro Bandey</a>
+  </footer>
+  <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="dist/stylishselect.min.js"></script>
+</body>
+</html>

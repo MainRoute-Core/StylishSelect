@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="description" content="Design, compile, and test your StylishSelect dropdowns interactively. Configure visual themes, transitions, layout engines, and dynamic style properties." />
+  <meta name="keywords" content="select configurer, UI customizer, live builder, web design sandbox, vanilla JS design-tokens, accessibility" />
+  <meta name="author" content="StylishSelect" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://MainRoute-Core.github.io/StylishSelect/setup" />
+  <meta property="og:title" content="Sandbox Builder | StylishSelect" />
+  <meta property="og:description" content="Generate declarative HTML configurations or programmatic JavaScript initialization codes inside our dynamic evaluation sandbox." />
+  <meta property="og:image" content="../src/social-.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sandbox Builder | StylishSelect" />
+  <meta name="twitter:description" content="Generate declarative HTML configurations or programmatic JavaScript initialization codes inside our dynamic evaluation sandbox." />
+  <meta name="twitter:image" content="../src/social-.png" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemPage",
+      "name": "Sandbox Configuration Builder",
+      "description": "An interactive utility to configure, compile, and visualize StylishSelect properties dynamically.",
+      "url": "https://MainRoute-Core.github.io/StylishSelect/setup",
+      "mainEntity": {
+          "@type": "SoftwareApplication",
+          "name": "StylishSelect",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "All modern web browsers"
+        }
+    }
+  </script>
+
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="canonical" href="https://MainRoute-Core.github.io/StylishSelect/">
+  <link rel="shortcut icon" type="image/x-icon" sizes="any" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="../src/16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../src/32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="../src/48.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="../src/64.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="../src/144.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../src/192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../src/512.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../src/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Pro-Bandey/ColorPickUp@latest/dist/colorpickup.min.css"/>
+  <script src="https://cdn.jsdelivr.net/gh/Pro-Bandey/ColorPickUp@latest/dist/colorpickup.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../dist/stylishselect.min.css">
+  
+  <title>Sandbox Configuration Builder — StylishSelect</title>
+  
+  <style>:root{ color-scheme: light dark; --primary: #c32ced; --primary-hover: #a01fd1; --bg: #ffffff; --bg-gradient-top: #fae8ff; --bg-gradient-bottom: #fcf8fc; --bg-soft: #faf8fc; --bg-card: #ffffff; --text: #0f172a; --muted: #64748b; --border: #e2e8f0; --nav-bg: rgba(255, 255, 255, 0.86); --nav-hover: #fdf4ff; --badge-bg: #fdf4ff; --input-bg: #ffffff; --code-bg: #1e1b29; --code-text: #f3e8ff; --scrollbar: #4a3758; --shadow: 0 15px 40px rgba(15, 23, 42, 0.05); --shadow-hover: 0 24px 60px rgba(15, 23, 42, 0.1); --radius: 18px; --radius-sm: 12px; --container: 1320px; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;} @media (prefers-color-scheme: dark){ :root{ --bg: #0b0714; --bg-gradient-top: #3b0764; --bg-gradient-bottom: #090514; --bg-soft: #141021; --bg-card: #141021; --text: #f5f3f7; --muted: #948fa8; --border: #2d263f; --nav-bg: rgba(11, 7, 20, 0.82); --nav-hover: #2a1b3d; --badge-bg: #2a1b3d; --input-bg: #2a1b3d; --code-bg: #090514; --code-text: #f3e8ff; --scrollbar: #5c437a; --shadow: 0 15px 40px rgba(0, 0, 0, 0.45); --shadow-hover: 0 24px 60px rgba(0, 0, 0, 0.6);}} *{ margin: 0; padding: 0; box-sizing: border-box;} html{ scroll-behavior: smooth;} body{ background: radial-gradient(circle at top right, var(--bg-gradient-top) 0%, transparent 35%), linear-gradient(var(--bg), var(--bg-gradient-bottom)); color: var(--text); font-size: 15px; line-height: 1.7; min-height: 100vh;} .ss-nav{ position: sticky; top: 0; z-index: 1000; background: var(--nav-bg); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border);} .navbar{ max-width: var(--container); height: 72px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 30px;} .logo{ display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 800; text-decoration: none; color: var(--text);} .logo-icon{ width: 40px; height: 40px; color: var(--primary);} .nav-links{ display: flex; gap: 10px;} .nav-links a{ text-decoration: none; padding: 10px 16px; border-radius: 10px; font-weight: 600; color: var(--muted); transition: 0.25s;} .nav-links a:hover, .nav-links .active{ background: var(--nav-hover); color: var(--primary);} .sandbox-container{ max-width: var(--container); margin: 2rem auto; padding: 0 30px 4rem; display: grid; grid-template-columns: 1fr; gap: 2rem;} @media(min-width: 900px){ .sandbox-container{ grid-template-columns: 1.1fr 0.9fr;}} .panel{ background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 1.5rem;} .panel-heading{ margin-top: 0; font-size: 22px; font-weight: 700; border-bottom: 1.5px solid var(--border); padding-bottom: 0.75rem;} .customizer-section-title{ font-size: 15px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px dashed var(--border); padding-bottom: 4px; margin-top: 0.5rem;} .form-group{ display: flex; flex-direction: column; gap: 0.5rem;} .form-group label{ font-weight: 600; font-size: 13.5px; color: var(--text);} .form-control{ width: 100%; padding: 0.7rem 0.9rem; border-radius: 8px; border: 1px solid var(--border); background-color: var(--bg-soft); color: var(--text); outline: none; font-size: 14.5px; transition: border-color 0.2s;} .form-control:focus{ border-color: var(--primary);} .color-customizer-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem;} .color-input-wrapper{ display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: 8px; background-color: var(--bg-soft);} .color-input-wrapper input[type="color"]{ border: none; background: none; width: 32px; height: 32px; cursor: pointer; flex-shrink: 0;} .color-input-wrapper span{ font-size: 13px; font-weight: 600; color: var(--muted);} .layout-customizer-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem;} .checkbox-group{ flex-direction: row; align-items: center; gap: 0.75rem; cursor: pointer;} .checkbox-group input{ width: 1.25rem; height: 1.25rem; cursor: pointer; accent-color: var(--primary);} .preview-box{ min-height: 180px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--border); border-radius: 12px; padding: 2.5rem; background-color: var(--bg-soft);} .preview-box .ss-container{ width: 250px;} pre{ background: var(--code-bg); border-radius: 12px; overflow: auto; padding: 20px; margin: 0;} code{ font-size: 13px; font-family: Consolas, monospace; color: var(--code-text);} pre::-webkit-scrollbar{ height: 8px;} pre::-webkit-scrollbar-thumb{ background: var(--scrollbar); border-radius: 99px;} h3{ font-size: 14.5px; font-weight: 700; color: var(--text);} @media (max-width: 500px){ .sandbox-container{ padding: 0 18px 3rem;} .panel{ padding: 1.5rem;} .preview-box .ss-container{ width: 100%;}} </style>
+</head>
+<body>
+
+  <nav class="ss-nav">
+    <div class="navbar">
+      <a href="../" class="logo">
+        <img class="logo-icon" src="../src/512.png" alt="ColorPickUp Logo">
+        StylishSelect
+      </a>
+      <div class="nav-links">
+        <a href="../">Quick Start</a>
+        <a href="../demos/">Demos</a>
+        <a href="../setup/" class="active">Sandbox Builder</a>
+        <a href="../events/">Schema & Events</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="sandbox-container">
+    
+    <section class="panel">
+      <h2 class="panel-heading">Interactive Configurator</h2>
+      
+      <div class="customizer-section-title">Core Presets</div>
+
+      <div class="form-group">
+        <label for="theme-selector">Active Theme Color</label>
+        <select id="theme-selector" stylish-select="auto modern elastic">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="amoled">Amoled Black</option>
+          <option value="github">GitHub Slate</option>
+          <option value="dracula">Dracula</option>
+          <option value="nord">Nord Arctic</option>
+          <option value="solarized">Solarized Warm</option>
+          <option value="tokyo-night">Tokyo Night</option>
+          <option value="gruvbox">Gruvbox Warm</option>
+          <option value="material">Material Design</option>
+          <option value="one-dark">One Dark</option>
+          <option value="high-contrast">High Contrast</option>
+          <option value="auto">Auto (System Native)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="style-selector">Layout Structure Style</label>
+        <select id="style-selector" stylish-select="auto modern elastic">
+          <option value="classic">Classic (Square)</option>
+          <option value="modern" selected>Modern (Rounded)</option>
+          <option value="rounded">Pill-shaped Rounded</option>
+          <option value="terminal">Monospace Terminal</option>
+          <option value="retro">Vintage Bevel Outsets</option>
+          <option value="neon">Neon Ambient Glow</option>
+          <option value="windows11">Windows 11 Mica</option>
+          <option value="ios">iOS System Rounded</option>
+          <option value="md3">Material 3 Rounded Outline</option>
+          <option value="glass">Glassmorphism Blur</option>
+          <option value="minimal">Minimal Flat Underlines</option>
+          <option value="compact">High Density Compact</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="animation-selector">Opening Transition Curve</label>
+        <select id="animation-selector" stylish-select="auto modern elastic">
+          <option value="zoom" selected>Scale Zoom Out</option>
+          <option value="fade">Simple Opacity Fade</option>
+          <option value="slide">Vertical Transform Slide</option>
+          <option value="elastic">Smooth Tension Elastic Bounce</option>
+          <option value="bounce">Overshoot Transition Bounce</option>
+          <option value="flip">3D Perspective Roll Flip</option>
+          <option value="grow">Vertical Transform scaleY Grow</option>
+          <option value="blur">Blur Transition</option>
+          <option value="none">Zero Anim System Override</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="duration-slider">Transition Speed: <span id="duration-val">200</span>ms</label>
+        <input type="range" id="duration-slider" min="0" max="1000" step="50" value="200" style="width: 100%; accent-color: var(--primary);">
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="searchable-check" checked>
+        <label for="searchable-check">Enable Keyboard Typist Search</label>
+      </div>
+
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="storage-check">
+        <label for="storage-check">Persist Choice Memory (LocalStorage)</label>
+      </div>
+
+      <div class="customizer-section-title">Color Overrides</div>
+      
+      <div class="color-customizer-grid">
+        <div class="form-group">
+          <label>Background</label>
+          <div class="color-input-wrapper">
+            <input type="text" data-colorpickup id="color-bg" value="">
+            <span id="label-bg">#FFFFFF</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Text Color</label>
+          <div class="color-input-wrapper">
+            <input type="text" data-colorpickup id="color-text" value="">
+            <span id="label-text">#1A1A1A</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Accent</label>
+          <div class="color-input-wrapper">
+            <input type="text" data-colorpickup id="color-accent" value="">
+            <span id="label-accent">#C32CED</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Accent Text</label>
+          <div class="color-input-wrapper">
+            <input type="text" data-colorpickup id="color-accent-text" value="">
+            <span id="label-accent-text">#FFFFFF</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Hover Background</label>
+          <div class="color-input-wrapper">
+            <input type="text" data-colorpickup id="color-hover-bg" value="">
+            <span id="label-hover-bg">#F2F2F7</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Hover Text</label>
+          <div class="color-input-wrapper">
+            <input type="text" data-colorpickup id="color-hover-text" value="">
+            <span id="label-hover-text">#1A1A1A</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="customizer-section-title">Structural Overrides</div>
+
+      <div class="layout-customizer-grid">
+        <div class="form-group">
+          <label for="radius-input">Border Radius</label>
+          <input type="text" id="radius-input" class="form-control" placeholder="e.g. 8px">
+        </div>
+        <div class="form-group">
+          <label for="padding-input">Padding</label>
+          <input type="text" id="padding-input" class="form-control" placeholder="e.g. 10px 14px">
+        </div>
+        <div class="form-group">
+          <label for="margin-input">Margin</label>
+          <input type="text" id="margin-input" class="form-control" placeholder="e.g. 4px">
+        </div>
+      </div>
+
+    </section>
+    <section class="panel">
+      <h2 class="panel-heading">Real-Time Evaluation Sandbox</h2>
+      
+      <div class="preview-box">
+        <select id="sandbox-select">
+          <option value="preview-1">Preview Node Option 1</option>
+          <option value="preview-2">Preview Node Option 2</option>
+          <option value="preview-3">Preview Node Option 3</option>
+          <option value="preview-4">Preview Node Option 4</option>
+          <option value="preview-5">Preview Node Option 5</option>
+        </select>
+      </div>
+
+      <div class="output-box" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <h3>HTML Declaration Preset</h3>
+          <pre><code id="html-output">Loading config...</code></pre>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+          <h3>Programmatic API Initialization Code</h3>
+          <pre><code id="js-output">Loading config...</code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="margin-top: 90px;border-top: 1px solid var(--border);padding: 26px;text-align: center;color: var(--muted);">
+    © <span id="year">2026</span> <a style="color: var(--primary);text-decoration: none;" href="https://MainRoute-Core.github.io">MainRoute Core</a> • All Rights Reserved. • <a style="color: var(--primary);text-decoration: none;" href="https://Pro-Bandey.github.io">Pro Bandey</a>
+  </footer>
+  <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="../dist/stylishselect.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      const themeSel = document.getElementById('theme-selector');
+      const styleSel = document.getElementById('style-selector');
+      const animSel = document.getElementById('animation-selector');
+      const durSlider = document.getElementById('duration-slider');
+      const durVal = document.getElementById('duration-val');
+      const searchCheck = document.getElementById('searchable-check');
+      const storageCheck = document.getElementById('storage-check');
+      
+      const colBg = document.getElementById('color-bg');
+      const colText = document.getElementById('color-text');
+      const colAccent = document.getElementById('color-accent');
+      const colAccentText = document.getElementById('color-accent-text');
+      const colHoverBg = document.getElementById('color-hover-bg');
+      const colHoverText = document.getElementById('color-hover-text');
+
+      const labelBg = document.getElementById('label-bg');
+      const labelText = document.getElementById('label-text');
+      const labelAccent = document.getElementById('label-accent');
+      const labelAccentText = document.getElementById('label-accent-text');
+      const labelHoverBg = document.getElementById('label-hover-bg');
+      const labelHoverText = document.getElementById('label-hover-text');
+
+      const valRadius = document.getElementById('radius-input');
+      const valPadding = document.getElementById('padding-input');
+      const valMargin = document.getElementById('margin-input');
+
+      const selectTarget = document.getElementById('sandbox-select');
+      const htmlOut = document.getElementById('html-output');
+      const jsOut = document.getElementById('js-output');
+
+      function updateSandbox() {
+        StylishSelect.destroy(selectTarget);
+
+        const currentTheme = themeSel.value;
+        const currentStyle = styleSel.value;
+        const currentAnim = animSel.value;
+        const currentDuration = parseInt(durSlider.value, 10);
+        const isSearchable = searchCheck.checked;
+        const isStorageEnabled = storageCheck.checked;
+
+        const customStyles = {};
+        
+        customStyles.bg = colBg.value;
+        customStyles.color = colText.value;
+        customStyles.accent = colAccent.value;
+        customStyles.accentColor = colAccentText.value;
+        customStyles.hoverBg = colHoverBg.value;
+        customStyles.hoverColor = colHoverText.value;
+
+        if (valRadius.value.trim() !== '') customStyles.radius = valRadius.value.trim();
+        if (valPadding.value.trim() !== '') customStyles.padding = valPadding.value.trim();
+        if (valMargin.value.trim() !== '') customStyles.margin = valMargin.value.trim();
+
+        labelBg.textContent = colBg.value.toUpperCase();
+        labelText.textContent = colText.value.toUpperCase();
+        labelAccent.textContent = colAccent.value.toUpperCase();
+        labelAccentText.textContent = colAccentText.value.toUpperCase();
+        labelHoverBg.textContent = colHoverBg.value.toUpperCase();
+        labelHoverText.textContent = colHoverText.value.toUpperCase();
+
+        durVal.textContent = currentDuration;
+
+        const configTokens = `${currentTheme} ${currentStyle} ${currentAnim}`;
+        htmlOut.textContent = `<select stylish-select="${configTokens}">\n  <option>Option 1</option>\n</select>`;
+
+        const customStylesString = JSON.stringify(customStyles, null, 4).replace(/\n/g, '\n  ');
+
+        const codeOutput = `StylishSelect.create('#sandbox-select', {
+  theme: '${currentTheme}',
+  style: '${currentStyle}',
+  animation: {
+    open: '${currentAnim}',
+    close: '${currentAnim === 'none' ? 'none' : 'fade'}',
+    duration: ${currentDuration},
+    easing: 'ease-out'
+  },
+  searchable: ${isSearchable},
+  storage: ${isStorageEnabled},
+  customStyles: ${customStylesString}
+});`;
+        jsOut.textContent = codeOutput;
+
+        StylishSelect.create(selectTarget, {
+          theme: currentTheme,
+          style: currentStyle,
+          animation: {
+            open: currentAnim,
+            close: currentAnim === 'none' ? 'none' : 'fade',
+            duration: currentDuration,
+            easing: 'ease-out'
+          },
+          searchable: isSearchable,
+          storage: isStorageEnabled,
+          customStyles: customStyles
+        });
+      }
+
+      [themeSel, styleSel, animSel, searchCheck, storageCheck].forEach(ctrl => {
+        ctrl.addEventListener('change', updateSandbox);
+      });
+
+      durSlider.addEventListener('input', updateSandbox);
+
+      [colBg, colText, colAccent, colAccentText, colHoverBg, colHoverText].forEach(colorCtrl => {
+        colorCtrl.addEventListener('input', updateSandbox);
+      });
+
+      [valRadius, valPadding, valMargin].forEach(inputCtrl => {
+        inputCtrl.addEventListener('input', updateSandbox);
+      });
+
+      updateSandbox();
+    });
+  </script>
+  <script>
+    ColorPickUp({
+      el: '#sandbox-target',
+      fieldMode: 'color',
+      style: 'rounded',
+      theme: 'auto',
+      animation: 'scale',
+      formatToggle: true,
+      alpha: true,
+      wcagTextBackground: '#ffffff',
+      components: {
+        history: true,
+        harmony: true,
+        palette: true,
+        paletteSelector: true
+      }
+    });
+    StylishSelect({
+      theme: 'light',
+      style: 'modern',
+      animation: {
+        open: 'zoom',
+        close: 'fade',
+        duration: 200,
+        easing: 'ease-out'
+      },
+      searchable: true,
+      storage: false,
+      customStyles: {
+        "bg": "",
+        "color": "",
+        "accent": "",
+        "accentColor": "",
+        "hoverBg": "",
+        "hoverColor": ""
+      }
+    });
+  </script>
+</body>
+</html>
