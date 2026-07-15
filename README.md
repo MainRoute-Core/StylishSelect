@@ -1,6 +1,6 @@
 # StylishSelect
 
-<img src="https://raw.githubusercontent.com/Pro-Bandey/StylishSelect/src/social-.png" alt="StylishSelect examples" width="544"/>
+<img src="https://pro-bandey.github.io/StylishSelect/src/social-.png" alt="StylishSelect examples" width="544"/>
 
 A modular, highly accessible, and performance-oriented replacement for native HTML single select elements written in vanilla ES6.
 
