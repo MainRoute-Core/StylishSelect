@@ -1,10 +1,10 @@
 # StylishSelect
 
-<img src="https://pro-bandey.github.io/StylishSelect/src/social-.png" alt="StylishSelect examples" width="544"/>
+<img src="https://MainRoute-Core.github.io/StylishSelect/src/social-.png" alt="StylishSelect examples" width="544"/>
 
 A modular, highly accessible, and performance-oriented replacement for native HTML single select elements written in vanilla ES6.
 
-[**View demo**](https://Pro-Bandey.github.io/StylishSelect/demos/)
+[**View demo**](https://MainRoute-Core.github.io/StylishSelect/demos/)
 
 ## Motivation
 
@@ -27,7 +27,7 @@ Absolutely do that if it is sufficient for your layout. The primary goal of this
 
 ### Basic Usage
 
-Download the [compiled release outputs](https://github.com/Pro-Bandey/StylishSelect/releases/latest) and reference them within your page layout:
+Download the [compiled release outputs](https://github.com/MainRoute-Core/StylishSelect/releases/latest) and reference them within your page layout:
 
 ```html
 <link rel="stylesheet" href="dist/stylishselect.min.css" />
@@ -39,9 +39,9 @@ Alternatively, load them from a CDN:
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/Pro-Bandey/StylishSelect@latest/dist/stylishselect.min.css"
+  href="https://cdn.jsdelivr.net/gh/MainRoute-Core/StylishSelect@latest/dist/stylishselect.min.css"
 />
-<script src="https://cdn.jsdelivr.net/gh/Pro-Bandey/StylishSelect@latest/dist/stylishselect.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/MainRoute-Core/StylishSelect@latest/dist/stylishselect.min.js"></script>
 ```
 
 Add the `stylish-select` attribute to your native HTML selects. They will be detected and initialized automatically:
