@@ -1,4 +1,4 @@
-function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;} /*!
+ /*!
  * StylishSelect
  * An accessible, multi-thematic, dynamic drop-in replacement for native select elements.
  * Built with absolute structural isolation, a high-performance rendering pipeline,
@@ -15,61 +15,61 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
   'use strict';
 
   // Private Registry maps native select elements to their StylishSelect instances
-  var instances = new WeakMap();
+  const instances = new WeakMap();
 
   // Registry validation stores
-  var VALID_THEMES = new Set([
+  const VALID_THEMES = new Set([
   'light', 'dark', 'amoled', 'github', 'dracula', 'nord', 'solarized',
-  'catppuccin', 'tokyo-night', 'gruvbox', 'material', 'one-dark', 'high-contrast', 'auto']);
+  'catppuccin', 'tokyo-night', 'gruvbox', 'material', 'one-dark', 'high-contrast', 'auto']
+  );
 
-
-  var VALID_STYLES = new Set([
+  const VALID_STYLES = new Set([
   'classic', 'modern', 'rounded', 'terminal', 'retro', 'neon', 'chrome',
-  'firefox', 'windows11', 'android', 'ios', 'md3', 'macos', 'fluent', 'glass', 'minimal', 'compact']);
+  'firefox', 'windows11', 'android', 'ios', 'md3', 'macos', 'fluent', 'glass', 'minimal', 'compact']
+  );
 
-
-  var VALID_ANIMATIONS = new Set([
+  const VALID_ANIMATIONS = new Set([
   'fade', 'scale', 'zoom', 'slide', 'bounce', 'flip', 'grow', 'shrink', 'rotate',
-  'swing', 'elastic', 'blur', 'float', 'pop', 'drop', 'fold', 'expand', 'collapse', 'none']);
-
+  'swing', 'elastic', 'blur', 'float', 'pop', 'drop', 'fold', 'expand', 'collapse', 'none']
+  );
 
   // Global settings for newly registered variants
-  var registeredThemes = new Map();
-  var registeredStyles = new Map();
-  var registeredAnimations = new Map();
+  const registeredThemes = new Map();
+  const registeredStyles = new Map();
+  const registeredAnimations = new Map();
 
   // Unified global Storage Helper
-  var StorageManager = {
+  const StorageManager = {
     prefix: 'ss-',
-    set: function set(key, value) {
+    set(key, value) {
       try {
         localStorage.setItem(this.prefix + key, value);
       } catch (e) {
+
         // Fallback for isolated contexts / private browsing limits
-      }
-    },
-    get: function get(key) {
+      }},
+    get(key) {
       try {
         return localStorage.getItem(this.prefix + key);
       } catch (e) {
         return null;
       }
     },
-    remove: function remove(key) {
+    remove(key) {
       try {
         localStorage.removeItem(this.prefix + key);
       } catch (e) {
-        // Safe bypass
-      }
-    } };
 
+        // Safe bypass
+      }}
+  };
 
   // Safe global DOM stylesheet injector for programmatically registered properties
-  var StyleInjector = {
+  const StyleInjector = {
     sheet: null,
-    inject: function inject(id, cssText) {
+    inject(id, cssText) {
       if (!this.sheet) {
-        var style = document.createElement('style');
+        const style = document.createElement('style');
         style.id = 'ss-dynamic-styles';
         document.head.appendChild(style);
         this.sheet = style.sheet;
@@ -78,59 +78,59 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       this.remove(id);
 
       // Translate the targeting selector dynamically to match instance attributes
-      var selector = "[data-ss-inject=\"" + id + "\"]";
+      let selector = "[data-ss-inject=\"" + id + "\"]";
       if (id.startsWith('theme-')) {
-        var themeName = id.replace('theme-', '');
+        const themeName = id.replace('theme-', '');
         selector = "[data-ss-theme=\"" + themeName + "\"]";
       } else if (id.startsWith('style-')) {
-        var styleName = id.replace('style-', '');
+        const styleName = id.replace('style-', '');
         selector = "[data-ss-style=\"" + styleName + "\"]";
       } else if (id.startsWith('anim-')) {
-        var animName = id.replace('anim-', '');
+        const animName = id.replace('anim-', '');
         selector = "[data-ss-anim=\"" + animName + "\"] .ss-dropdown";
       }
 
-      var index = this.sheet.insertRule(selector + " { " + cssText + " }", this.sheet.cssRules.length);
+      const index = this.sheet.insertRule(selector + " { " + cssText + " }", this.sheet.cssRules.length);
       this.sheet.cssRules[index]._ssId = id;
     },
-    remove: function remove(id) {
+    remove(id) {
       if (!this.sheet) return;
-      for (var i = this.sheet.cssRules.length - 1; i >= 0; i--) {
+      for (let i = this.sheet.cssRules.length - 1; i >= 0; i--) {
         if (this.sheet.cssRules[i]._ssId === id) {
           this.sheet.deleteRule(i);
         }
       }
-    } };
-
+    }
+  };
 
   // Adaptive System preference tracker (prefers-color-scheme)
-  var SystemThemeObserver = {
+  const SystemThemeObserver = {
     listeners: new Set(),
     mediaQuery: window.matchMedia('(prefers-color-scheme: dark)'),
-    init: function init() {var _this = this;
-      this.mediaQuery.addEventListener('change', function (e) {
-        var activeTheme = e.matches ? 'dark' : 'light';
-        _this.listeners.forEach(function (callback) {return callback(activeTheme);});
+    init() {
+      this.mediaQuery.addEventListener('change', (e) => {
+        const activeTheme = e.matches ? 'dark' : 'light';
+        this.listeners.forEach((callback) => callback(activeTheme));
       });
     },
-    subscribe: function subscribe(callback) {
+    subscribe(callback) {
       this.listeners.add(callback);
       // Immediate execution with current state
       callback(this.mediaQuery.matches ? 'dark' : 'light');
     },
-    unsubscribe: function unsubscribe(callback) {
+    unsubscribe(callback) {
       this.listeners.delete(callback);
-    } };
-
+    }
+  };
   SystemThemeObserver.init();
 
   // Main utility parsing string configuration lists (e.g. class list, attribute lists)
   function parseConfigTokens(attrValue) {
     if (!attrValue) return {};
-    var tokens = attrValue.split(/\s+/).map(function (t) {return t.toLowerCase().trim();}).filter(Boolean);
-    var parsed = {};
+    const tokens = attrValue.split(/\s+/).map((t) => t.toLowerCase().trim()).filter(Boolean);
+    const parsed = {};
 
-    tokens.forEach(function (token) {
+    tokens.forEach((token) => {
       if (VALID_THEMES.has(token) || registeredThemes.has(token)) {
         parsed.theme = token;
       } else if (VALID_STYLES.has(token) || registeredStyles.has(token)) {
@@ -143,19 +143,19 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
   }
 
   // Active keyboard tracking search variables
-  var searchString = '';
-  var searchTimeout = null;var
+  let searchString = '';
+  let searchTimeout = null;
 
-  StylishSelectInstance = /*#__PURE__*/function () {
-    function StylishSelectInstance(select, config) {if (config === void 0) {config = {};}
+  class StylishSelectInstance {
+    constructor(select, config) {if (config === void 0) {config = {};}
       this.select = select;
       this.index = StylishSelectInstance.counter++;
 
       // Merge configuration options in strict precedence order:
-      var attrConfig = parseConfigTokens(select.getAttribute('stylish-select'));
+      const attrConfig = parseConfigTokens(select.getAttribute('stylish-select'));
 
-      var rawAnim = select.getAttribute('data-ss-animation');
-      var parsedAnim;
+      let rawAnim = select.getAttribute('data-ss-animation');
+      let parsedAnim;
       if (rawAnim) {
         try {
           parsedAnim = JSON.parse(rawAnim);
@@ -164,13 +164,13 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         }
       }
 
-      var dataConfig = {
+      const dataConfig = {
         theme: select.getAttribute('data-ss-theme') || undefined,
         style: select.getAttribute('data-ss-style') || undefined,
-        animation: parsedAnim };
-
+        animation: parsedAnim
+      };
       // Clean undefined keys to keep fallback merges logical
-      Object.keys(dataConfig).forEach(function (k) {return dataConfig[k] === undefined && delete dataConfig[k];});
+      Object.keys(dataConfig).forEach((k) => dataConfig[k] === undefined && delete dataConfig[k]);
 
       this.config = Object.assign({
         theme: 'auto',
@@ -179,8 +179,8 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
           open: 'zoom',
           close: 'fade',
           duration: 200,
-          easing: 'cubic-bezier(0.25, 1, 0.5, 1)' },
-
+          easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+        },
         searchable: true,
         storage: true,
         customStyles: {} // Supports bg, accent, hoverBg, color, hoverColor, padding, margin, radius overrides
@@ -192,8 +192,8 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
           open: this.config.animation,
           close: this.config.animation,
           duration: 200,
-          easing: 'cubic-bezier(0.25, 1, 0.5, 1)' };
-
+          easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+        };
       }
 
       // Initialize State Properties
@@ -206,8 +206,8 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
 
       // Handle Storage persistence
       if (this.config.storage) {
-        var storedTheme = StorageManager.get("theme-" + this.index);
-        var storedStyle = StorageManager.get("style-" + this.index);
+        const storedTheme = StorageManager.get("theme-" + this.index);
+        const storedStyle = StorageManager.get("style-" + this.index);
         if (storedTheme) this.config.theme = storedTheme;
         if (storedStyle) this.config.style = storedStyle;
       }
@@ -222,10 +222,10 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
 
       // Ensure system preferences are mapped to resolve scheme changes dynamically
       SystemThemeObserver.subscribe(this.boundSystemThemeChange);
-    }var _proto = StylishSelectInstance.prototype;_proto.
+    }
 
-    buildDOM = function buildDOM() {
-      var parent = this.select.parentNode;
+    buildDOM() {
+      const parent = this.select.parentNode;
 
       this.container = document.createElement('span');
       this.container.className = 'ss-container';
@@ -279,11 +279,11 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       this.select.classList.add('ss-original');
       this.select.style.display = 'none';
       parent.insertBefore(this.container, this.select.nextSibling);
-    };_proto.
+    }
 
-    retrieveNativeLabel = function retrieveNativeLabel() {var _this2 = this;
-      var parent = this.select.parentNode;
-      var labelEl = null;
+    retrieveNativeLabel() {
+      const parent = this.select.parentNode;
+      let labelEl = null;
 
       if (parent && parent.nodeName === 'LABEL') {
         labelEl = parent;
@@ -292,27 +292,27 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       }
 
       if (labelEl) {
-        var textNodes = Array.from(labelEl.childNodes).filter(function (n) {return n.nodeType === 3;});
-        var text = textNodes.map(function (n) {return n.textContent.trim();}).join(' ').trim();
+        const textNodes = Array.from(labelEl.childNodes).filter((n) => n.nodeType === 3);
+        const text = textNodes.map((n) => n.textContent.trim()).join(' ').trim();
         if (text) {
-          labelEl.addEventListener('click', function (e) {
-            if (e.target !== _this2.select && !_this2.container.contains(e.target)) {
+          labelEl.addEventListener('click', (e) => {
+            if (e.target !== this.select && !this.container.contains(e.target)) {
               e.preventDefault();
-              _this2.button.focus();
-              _this2.toggle();
+              this.button.focus();
+              this.toggle();
             }
           });
           return text;
         }
       }
       return 'Select Option';
-    };_proto.
+    }
 
-    applyCustomStyles = function applyCustomStyles() {var _this3 = this;
-      var styles = this.config.customStyles;
+    applyCustomStyles() {
+      const styles = this.config.customStyles;
       if (!styles || typeof styles !== 'object') return;
 
-      var mappings = {
+      const mappings = {
         bg: '--ss-bg',
         color: '--ss-color',
         accent: '--ss-accent',
@@ -321,40 +321,40 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         hoverColor: '--ss-hover-color',
         padding: '--ss-padding',
         margin: '--ss-margin',
-        radius: '--ss-radius' };
+        radius: '--ss-radius'
+      };
 
-
-      Object.keys(mappings).forEach(function (key) {
+      Object.keys(mappings).forEach((key) => {
         if (styles[key] !== undefined && styles[key] !== null) {
-          _this3.container.style.setProperty(mappings[key], styles[key]);
+          this.container.style.setProperty(mappings[key], styles[key]);
 
           // Cascading fallback variables
-          if (key === 'bg') _this3.container.style.setProperty('--ss-list-bg', styles.bg);
-          if (key === 'color') _this3.container.style.setProperty('--ss-list-color', styles.color);
-          if (key === 'accent') _this3.container.style.setProperty('--ss-selected-bg', styles.accent);
-          if (key === 'accentColor') _this3.container.style.setProperty('--ss-selected-color', styles.accentColor);
-          if (key === 'radius') _this3.container.style.setProperty('--ss-list-radius', styles.radius);
+          if (key === 'bg') this.container.style.setProperty('--ss-list-bg', styles.bg);
+          if (key === 'color') this.container.style.setProperty('--ss-list-color', styles.color);
+          if (key === 'accent') this.container.style.setProperty('--ss-selected-bg', styles.accent);
+          if (key === 'accentColor') this.container.style.setProperty('--ss-selected-color', styles.accentColor);
+          if (key === 'radius') this.container.style.setProperty('--ss-list-radius', styles.radius);
         }
       });
-    };_proto.
+    }
 
-    rebuildOptions = function rebuildOptions() {var _this4 = this;
+    rebuildOptions() {
       this.dropdown.innerHTML = '';
       this.resizeElement.innerHTML = '';
 
-      var options = Array.from(this.select.options);
-      var longestNode = null;
-      var maxLength = 0;
+      const options = Array.from(this.select.options);
+      let longestNode = null;
+      let maxLength = 0;
 
-      options.forEach(function (option, idx) {
-        var item = document.createElement('span');
+      options.forEach((option, idx) => {
+        const item = document.createElement('span');
         item.className = 'ss-option';
         item.setAttribute('role', 'option');
-        item.setAttribute('id', "ss-opt-" + _this4.index + "-" + idx);
+        item.setAttribute('id', "ss-opt-" + this.index + "-" + idx);
         item.setAttribute('data-ss-value', option.value);
         item.setAttribute('tabindex', '-1');
 
-        var isSelected = option.selected;
+        const isSelected = option.selected;
         item.setAttribute('aria-selected', isSelected ? 'true' : 'false');
 
         if (option.disabled) {
@@ -363,25 +363,25 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         }
 
         // Incorporate native labels or custom attribute icon sprites
-        var icon = option.getAttribute('data-icon');
-        var iconMarkup = icon ? "<svg class=\"ss-icon\" aria-hidden=\"true\"><use href=\"" + icon + "\"></use></svg> " : '';
-        var itemLabel = "<span>" + (option.text || '&nbsp;') + "</span>";
+        const icon = option.getAttribute('data-icon');
+        const iconMarkup = icon ? "<svg class=\"ss-icon\" aria-hidden=\"true\"><use href=\"" + icon + "\"></use></svg> " : '';
+        const itemLabel = "<span>" + (option.text || '&nbsp;') + "</span>";
 
         item.innerHTML = "" + iconMarkup + itemLabel;
-        _this4.dropdown.appendChild(item);
+        this.dropdown.appendChild(item);
 
         // Keep track of the longest label to set sizing bounds
-        var textLength = option.text ? option.text.length : 0;
+        const textLength = option.text ? option.text.length : 0;
         if (textLength > maxLength) {
           maxLength = textLength;
           longestNode = item.cloneNode(true);
         }
 
         if (isSelected) {
-          _this4.button.innerHTML = item.innerHTML;
-          _this4.currentFocusOption = item;
-          _this4.dropdown.setAttribute('aria-activedescendant', item.id);
-          _this4.committedSelectionIndex = idx;
+          this.button.innerHTML = item.innerHTML;
+          this.currentFocusOption = item;
+          this.dropdown.setAttribute('aria-activedescendant', item.id);
+          this.committedSelectionIndex = idx;
         }
       });
 
@@ -390,53 +390,53 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         longestNode.className = 'ss-resize-template';
         this.resizeElement.appendChild(longestNode);
       }
-    };_proto.
+    }
 
-    bindEvents = function bindEvents() {var _this5 = this;
+    bindEvents() {
       // Primary trigger click handlers
-      this.button.addEventListener('click', function (e) {
+      this.button.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        if (_this5.select.disabled) return;
-        _this5.toggle();
+        if (this.select.disabled) return;
+        this.toggle();
       });
 
       // Event delegation for option elements inside the dropdown
-      this.dropdown.addEventListener('click', function (e) {
-        var optionNode = e.target.closest('.ss-option');
+      this.dropdown.addEventListener('click', (e) => {
+        const optionNode = e.target.closest('.ss-option');
         if (!optionNode || optionNode.getAttribute('aria-disabled') === 'true') {
           e.stopPropagation();
           return;
         }
-        _this5.selectOption(optionNode);
-        _this5.close(true);
+        this.selectOption(optionNode);
+        this.close(true);
       });
 
       // Mouse movements to naturally track focus state without turning on keyboard focus rings
-      this.dropdown.addEventListener('mousemove', function (e) {
-        var optionNode = e.target.closest('.ss-option');
+      this.dropdown.addEventListener('mousemove', (e) => {
+        const optionNode = e.target.closest('.ss-option');
         if (optionNode && optionNode.getAttribute('aria-disabled') !== 'true') {
-          _this5.container.classList.remove('ss-keyboard-nav');
-          _this5.focusOption(optionNode, false);
+          this.container.classList.remove('ss-keyboard-nav');
+          this.focusOption(optionNode, false);
         }
       });
 
       // Remove keyboard navigation mode when clicking inside the container
-      this.container.addEventListener('mousedown', function () {
-        _this5.container.classList.remove('ss-keyboard-nav');
+      this.container.addEventListener('mousedown', () => {
+        this.container.classList.remove('ss-keyboard-nav');
       });
 
       // Native elements changes syncer
-      this.select.addEventListener('change', function () {
-        _this5.updateFromNative();
+      this.select.addEventListener('change', () => {
+        this.updateFromNative();
       });
 
       // Key handlers bound to Accessibility systems
       this.button.addEventListener('keydown', this.handleButtonKeys.bind(this));
       this.dropdown.addEventListener('keydown', this.handleDropdownKeys.bind(this));
-    };_proto.
+    }
 
-    handleButtonKeys = function handleButtonKeys(e) {
+    handleButtonKeys(e) {
       if (this.select.disabled) return;
 
       // Delegate directly to the open handler if the dropdown is currently open
@@ -446,9 +446,9 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       }
 
       this.container.classList.add('ss-keyboard-nav');
-      var prevent = true;
-      var options = Array.from(this.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)'));
-      var activeIndex = options.indexOf(this.currentFocusOption);
+      let prevent = true;
+      const options = Array.from(this.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)'));
+      const activeIndex = options.indexOf(this.currentFocusOption);
 
       // Handle native closed cycling vs Alt keys
       if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && e.altKey) {
@@ -495,20 +495,20 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
             this.handleIncrementalSearch(e.key, false); // Direct select on typeahead when closed
           } else {
             prevent = false;
-          }}
-
+          }
+      }
 
       if (prevent) {
         e.preventDefault();
         e.stopPropagation();
       }
-    };_proto.
+    }
 
-    handleDropdownKeys = function handleDropdownKeys(e) {
+    handleDropdownKeys(e) {
       this.container.classList.add('ss-keyboard-nav');
-      var prevent = true;
-      var options = Array.from(this.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)'));
-      var currentIndex = options.indexOf(this.currentFocusOption);
+      let prevent = true;
+      const options = Array.from(this.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)'));
+      const currentIndex = options.indexOf(this.currentFocusOption);
 
       if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && e.altKey) {
         if (this.currentFocusOption) {
@@ -534,13 +534,13 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
           }
           break;
         case 'PageUp':
-          var stepUpIndex = Math.max(0, currentIndex - 5);
+          const stepUpIndex = Math.max(0, currentIndex - 5);
           if (options.length > 0) {
             this.focusOption(options[stepUpIndex], true);
           }
           break;
         case 'PageDown':
-          var stepDownIndex = Math.min(options.length - 1, currentIndex + 5);
+          const stepDownIndex = Math.min(options.length - 1, currentIndex + 5);
           if (options.length > 0) {
             this.focusOption(options[stepDownIndex], true);
           }
@@ -578,39 +578,39 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
             this.handleIncrementalSearch(e.key, true); // Visual highlight on typeahead when open
           } else {
             prevent = false;
-          }}
-
+          }
+      }
 
       if (prevent) {
         e.preventDefault();
         e.stopPropagation();
       }
-    };_proto.
+    }
 
-    isPrintableCharacter = function isPrintableCharacter(e) {
+    isPrintableCharacter(e) {
       return e.key.length === 1 && !e.altKey && !e.ctrlKey && !e.metaKey;
-    };_proto.
+    }
 
-    handleIncrementalSearch = function handleIncrementalSearch(char, focusOnly) {if (focusOnly === void 0) {focusOnly = true;}
+    handleIncrementalSearch(char, focusOnly) {if (focusOnly === void 0) {focusOnly = true;}
       if (!this.config.searchable) return;
 
       if (searchTimeout) clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(function () {
+      searchTimeout = setTimeout(() => {
         searchString = '';
       }, 1000);
 
       searchString += char.toLowerCase();
-      var options = Array.from(this.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)'));
+      const options = Array.from(this.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)'));
 
       // Look up elements starting with current search tracking string
-      var matched = options.find(function (opt) {return opt.textContent.trim().toLowerCase().startsWith(searchString);});
+      let matched = options.find((opt) => opt.textContent.trim().toLowerCase().startsWith(searchString));
 
       // Cycling strategy optimization for single repeating character queries
       if (!matched && searchString.length > 1 && /^([a-zA-Z0-9])\1+$/.test(searchString)) {
-        var baseChar = searchString[0];
-        var repeatedMatches = options.filter(function (opt) {return opt.textContent.trim().toLowerCase().startsWith(baseChar);});
+        const baseChar = searchString[0];
+        const repeatedMatches = options.filter((opt) => opt.textContent.trim().toLowerCase().startsWith(baseChar));
         if (repeatedMatches.length > 0) {
-          var cyclerIndex = (searchString.length - 1) % repeatedMatches.length;
+          const cyclerIndex = (searchString.length - 1) % repeatedMatches.length;
           matched = repeatedMatches[cyclerIndex];
         }
       }
@@ -623,9 +623,9 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
           this.focusOption(matched, false);
         }
       }
-    };_proto.
+    }
 
-    focusOption = function focusOption(optionNode, shouldScrollIntoView) {if (shouldScrollIntoView === void 0) {shouldScrollIntoView = false;}
+    focusOption(optionNode, shouldScrollIntoView) {if (shouldScrollIntoView === void 0) {shouldScrollIntoView = false;}
       if (!optionNode) return;
 
       if (this.currentFocusOption) {
@@ -639,26 +639,26 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       if (shouldScrollIntoView) {
         this.scrollOptionIntoView(optionNode);
       }
-    };_proto.
+    }
 
-    scrollOptionIntoView = function scrollOptionIntoView(optionNode) {
-      var dropdownHeight = this.dropdown.clientHeight;
-      var optionTop = optionNode.offsetTop;
-      var optionHeight = optionNode.offsetHeight;
-      var scrollPosition = this.dropdown.scrollTop;
+    scrollOptionIntoView(optionNode) {
+      const dropdownHeight = this.dropdown.clientHeight;
+      const optionTop = optionNode.offsetTop;
+      const optionHeight = optionNode.offsetHeight;
+      const scrollPosition = this.dropdown.scrollTop;
 
       if (optionTop < scrollPosition) {
         this.dropdown.scrollTop = optionTop;
       } else if (optionTop + optionHeight > scrollPosition + dropdownHeight) {
         this.dropdown.scrollTop = optionTop + optionHeight - dropdownHeight;
       }
-    };_proto.
+    }
 
-    selectOption = function selectOption(optionNode) {
-      var allOptions = Array.from(this.dropdown.querySelectorAll('.ss-option'));
-      var activeIndex = allOptions.indexOf(optionNode);
+    selectOption(optionNode) {
+      const allOptions = Array.from(this.dropdown.querySelectorAll('.ss-option'));
+      const activeIndex = allOptions.indexOf(optionNode);
 
-      allOptions.forEach(function (opt) {return opt.setAttribute('aria-selected', 'false');});
+      allOptions.forEach((opt) => opt.setAttribute('aria-selected', 'false'));
       optionNode.setAttribute('aria-selected', 'true');
       this.button.innerHTML = optionNode.innerHTML;
 
@@ -674,34 +674,34 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       this.dispatchEvent('ss:change', {
         value: optionNode.getAttribute('data-ss-value'),
         text: optionNode.textContent.trim(),
-        index: activeIndex });
+        index: activeIndex
+      });
+    }
 
-    };_proto.
-
-    revertSelection = function revertSelection() {
-      var allOptions = Array.from(this.dropdown.querySelectorAll('.ss-option'));
-      var previouslyCommittedOption = allOptions[this.committedSelectionIndex];
+    revertSelection() {
+      const allOptions = Array.from(this.dropdown.querySelectorAll('.ss-option'));
+      const previouslyCommittedOption = allOptions[this.committedSelectionIndex];
       if (previouslyCommittedOption) {
         this.focusOption(previouslyCommittedOption, false);
       }
-    };_proto.
+    }
 
-    toggle = function toggle() {
+    toggle() {
       if (this.isOpen) {
         this.close(true);
       } else {
         this.open();
       }
-    };_proto.
+    }
 
-    open = function open() {var _this6 = this;
+    open() {
       if (this.isOpen || this.select.disabled) return;
 
       // Close all other active elements
-      document.querySelectorAll('.ss-button[aria-expanded="true"]').forEach(function (activeButton) {
-        var container = activeButton.parentNode;
-        var inst = container ? container._ssInstance : null;
-        if (inst && inst !== _this6) {
+      document.querySelectorAll('.ss-button[aria-expanded="true"]').forEach((activeButton) => {
+        const container = activeButton.parentNode;
+        const inst = container ? container._ssInstance : null;
+        if (inst && inst !== this) {
           inst.close(false);
         }
       });
@@ -725,13 +725,13 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       this.dispatchEvent('ss:open');
 
       // Align focus state automatically
-      var activeOption = this.dropdownActiveOption;
+      const activeOption = this.dropdownActiveOption;
       if (activeOption) {
         this.focusOption(activeOption, true);
       }
-    };_proto.
+    }
 
-    close = function close(refocusButton) {var _this7 = this;if (refocusButton === void 0) {refocusButton = false;}
+    close(refocusButton) {if (refocusButton === void 0) {refocusButton = false;}
       if (!this.isOpen) return;
 
       this.isOpen = false;
@@ -751,66 +751,66 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       }
 
       // Read transition metadata
-      var duration = this.config.animation && this.config.animation.duration || 200;
+      const duration = this.config.animation && this.config.animation.duration || 200;
 
       if (this.closeTimeout) clearTimeout(this.closeTimeout);
-      this.closeTimeout = setTimeout(function () {
-        if (!_this7.isOpen) {
-          _this7.dropdown.style.display = 'none';
-          _this7.dropdown.classList.remove('ss-animate-out');
-          _this7.container.classList.remove('ss-keyboard-nav'); // Clear active key-nav tracking
-          _this7.dispatchEvent('ss:close');
+      this.closeTimeout = setTimeout(() => {
+        if (!this.isOpen) {
+          this.dropdown.style.display = 'none';
+          this.dropdown.classList.remove('ss-animate-out');
+          this.container.classList.remove('ss-keyboard-nav'); // Clear active key-nav tracking
+          this.dispatchEvent('ss:close');
         }
       }, duration);
-    };_proto.
+    }
 
+    get dropdownActiveOption() {
+      return this.dropdown.querySelector('[aria-selected="true"]') || this.dropdown.querySelector('.ss-option');
+    }
 
-
-
-
-    applyAnimationConfig = function applyAnimationConfig(isOpenAnimation) {
-      var anim = this.config.animation;
+    applyAnimationConfig(isOpenAnimation) {
+      const anim = this.config.animation;
       if (!anim || anim.open === 'none' || anim.close === 'none') {
         this.dropdown.style.transition = 'none';
         return;
       }
 
       // Check system reduced motion configurations
-      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var duration = prefersReduced ? 0 : anim.duration || 200;
-      var easing = anim.easing || 'ease';
-      var animType = isOpenAnimation ? anim.open || 'zoom' : anim.close || 'fade';
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const duration = prefersReduced ? 0 : anim.duration || 200;
+      const easing = anim.easing || 'ease';
+      const animType = isOpenAnimation ? anim.open || 'zoom' : anim.close || 'fade';
 
       this.container.setAttribute('data-ss-anim', animType);
       this.dropdown.style.setProperty('--ss-anim-duration', duration + "ms");
       this.dropdown.style.setProperty('--ss-anim-easing', easing);
-    };_proto.
+    }
 
-    repositionDropdown = function repositionDropdown() {var _this8 = this;
+    repositionDropdown() {
       if (!this.isOpen) return;
 
       if (this.repositionFrame) cancelAnimationFrame(this.repositionFrame);
 
       // Throttled viewport layout alignment computation
-      this.repositionFrame = requestAnimationFrame(function () {
-        if (!_this8.isOpen) return;
-        var rect = _this8.button.getBoundingClientRect();
-        var windowHeight = window.innerHeight;
-        var dropdownHeight = _this8.dropdown.offsetHeight;
+      this.repositionFrame = requestAnimationFrame(() => {
+        if (!this.isOpen) return;
+        const rect = this.button.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const dropdownHeight = this.dropdown.offsetHeight;
 
         // Determine top-bottom context flip threshold
-        var hasSpaceBelow = rect.bottom + dropdownHeight <= windowHeight;
-        var hasSpaceAbove = rect.top - dropdownHeight >= 0;
+        const hasSpaceBelow = rect.bottom + dropdownHeight <= windowHeight;
+        const hasSpaceAbove = rect.top - dropdownHeight >= 0;
 
         if (!hasSpaceBelow && hasSpaceAbove) {
-          _this8.container.classList.add('ss-top');
+          this.container.classList.add('ss-top');
         } else {
-          _this8.container.classList.remove('ss-top');
+          this.container.classList.remove('ss-top');
         }
       });
-    };_proto.
+    }
 
-    applyTheme = function applyTheme(theme) {
+    applyTheme(theme) {
       this.config.theme = theme;
       this.container.setAttribute('data-ss-theme', theme);
 
@@ -818,14 +818,14 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         StorageManager.set("theme-" + this.index, theme);
       }
       this.applyCustomStyles(); // Ensure custom style overrides persist over theme defaults
-    };_proto.
+    }
 
-    handleSystemThemeChange = function handleSystemThemeChange(resolvedTheme) {
+    handleSystemThemeChange(resolvedTheme) {
       // Dynamic internal system resolution mapping to global rules
       this.container.setAttribute('data-ss-resolved-theme', resolvedTheme);
-    };_proto.
+    }
 
-    applyStyle = function applyStyle(style) {
+    applyStyle(style) {
       this.config.style = style;
       this.container.setAttribute('data-ss-style', style);
 
@@ -833,9 +833,9 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         StorageManager.set("style-" + this.index, style);
       }
       this.applyCustomStyles(); // Ensure custom style overrides persist over style defaults
-    };_proto.
+    }
 
-    updateFromNative = function updateFromNative() {
+    updateFromNative() {
       this.button.setAttribute('aria-disabled', this.select.disabled ? 'true' : 'false');
       if (this.select.disabled) {
         this.button.setAttribute('tabindex', '-1');
@@ -844,18 +844,18 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
       }
       this.rebuildOptions();
       this.applyCustomStyles();
-    };_proto.
+    }
 
-    dispatchEvent = function dispatchEvent(name, detail) {if (detail === void 0) {detail = {};}
-      var customEvent = new CustomEvent(name, {
+    dispatchEvent(name, detail) {if (detail === void 0) {detail = {};}
+      const customEvent = new CustomEvent(name, {
         bubbles: true,
         cancelable: true,
-        detail: Object.assign({ instance: this }, detail) });
-
+        detail: Object.assign({ instance: this }, detail)
+      });
       this.select.dispatchEvent(customEvent);
-    };_proto.
+    }
 
-    destroy = function destroy() {
+    destroy() {
       // Unsubscribe all global listeners securely
       SystemThemeObserver.unsubscribe(this.boundSystemThemeChange);
       window.removeEventListener('resize', this.boundReposition);
@@ -871,17 +871,17 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
         this.container.parentNode.removeChild(this.container);
       }
       instances.delete(this.select);
-    };_createClass(StylishSelectInstance, [{ key: "dropdownActiveOption", get: function get() {return this.dropdown.querySelector('[aria-selected="true"]') || this.dropdown.querySelector('.ss-option');} }]);return StylishSelectInstance;}();
-
+    }
+  }
 
   StylishSelectInstance.counter = 0;
 
   // Handle outside dynamic close events
-  document.addEventListener('click', function (e) {
+  document.addEventListener('click', (e) => {
     if (!e.target.closest('.ss-container')) {
-      document.querySelectorAll('.ss-button[aria-expanded="true"]').forEach(function (activeButton) {
-        var container = activeButton.parentNode;
-        var inst = container ? container._ssInstance : null;
+      document.querySelectorAll('.ss-button[aria-expanded="true"]').forEach((activeButton) => {
+        const container = activeButton.parentNode;
+        const inst = container ? container._ssInstance : null;
         if (inst) {
           inst.close(false);
         }
@@ -890,16 +890,16 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
   });
 
   // Exported Main Global Library Namespace
-  var StylishSelect = {
+  const StylishSelect = {
     /**
      * Initializes elements in document matching attribute pattern selector
      * @param {string} [selector] 
      * @param {object} [options]
      */
-    init: function init(selector, options) {if (selector === void 0) {selector = 'select[stylish-select]';}if (options === void 0) {options = {};}
-      document.querySelectorAll(selector).forEach(function (select) {
+    init(selector, options) {if (selector === void 0) {selector = 'select[stylish-select]';}if (options === void 0) {options = {};}
+      document.querySelectorAll(selector).forEach((select) => {
         if (!instances.has(select)) {
-          var inst = new StylishSelectInstance(select, options);
+          const inst = new StylishSelectInstance(select, options);
           instances.set(select, inst);
         }
       });
@@ -908,216 +908,216 @@ function _defineProperties(target, props) {for (var i = 0; i < props.length; i++
     /**
      * Imperative factory design construct
      */
-    create: function create(element, options) {if (options === void 0) {options = {};}
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
+    create(element, options) {if (options === void 0) {options = {};}
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
       if (!select || select.nodeName !== 'SELECT') {
         throw new TypeError('StylishSelect: Invalid initialization target root.');
       }
       if (instances.has(select)) {
         return instances.get(select);
       }
-      var inst = new StylishSelectInstance(select, options);
+      const inst = new StylishSelectInstance(select, options);
       instances.set(select, inst);
       return inst;
     },
 
-    destroy: function destroy(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    destroy(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) inst.destroy();
     },
 
-    refresh: function refresh(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    refresh(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) inst.updateFromNative();
     },
 
-    update: function update(element) {
+    update(element) {
       this.refresh(element);
     },
 
-    enable: function enable(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
+    enable(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
       if (select) {
         select.disabled = false;
         this.refresh(select);
       }
     },
 
-    disable: function disable(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
+    disable(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
       if (select) {
         select.disabled = true;
         this.refresh(select);
       }
     },
 
-    open: function open(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    open(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) inst.open();
     },
 
-    close: function close(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    close(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) inst.close(true);
     },
 
-    toggle: function toggle(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    toggle(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) inst.toggle();
     },
 
-    select: function select(element, value) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    select(element, value) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) {
-        var option = Array.from(inst.dropdown.querySelectorAll('.ss-option')).
-        find(function (opt) {return opt.getAttribute('data-ss-value') === value;});
+        const option = Array.from(inst.dropdown.querySelectorAll('.ss-option')).
+        find((opt) => opt.getAttribute('data-ss-value') === value);
         if (option) {
           inst.selectOption(option);
         }
       }
     },
 
-    clear: function clear(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    clear(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst && inst.dropdown.firstElementChild) {
         inst.selectOption(inst.dropdown.firstElementChild);
       }
     },
 
-    search: function search(element, query) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    search(element, query) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) {
-        var normalized = query.toLowerCase();
-        var option = Array.from(inst.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)')).
-        find(function (opt) {return opt.textContent.trim().toLowerCase().includes(normalized);});
+        const normalized = query.toLowerCase();
+        const option = Array.from(inst.dropdown.querySelectorAll('.ss-option:not(.ss-disabled)')).
+        find((opt) => opt.textContent.trim().toLowerCase().includes(normalized));
         if (option) {
           inst.focusOption(option, true);
         }
       }
     },
 
-    filter: function filter(element, query) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    filter(element, query) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) {
-        var normalized = query.toLowerCase();
-        inst.dropdown.querySelectorAll('.ss-option').forEach(function (opt) {
-          var isMatch = opt.textContent.trim().toLowerCase().includes(normalized);
+        const normalized = query.toLowerCase();
+        inst.dropdown.querySelectorAll('.ss-option').forEach((opt) => {
+          const isMatch = opt.textContent.trim().toLowerCase().includes(normalized);
           opt.style.display = isMatch ? 'flex' : 'none';
         });
       }
     },
 
-    setTheme: function setTheme(element, themeName) {
+    setTheme(element, themeName) {
       // Global runtime theme adjustment across target select or complete scope of selectors
       if (typeof element === 'string' && !document.querySelector(element)) {
         themeName = element;
         element = null;
       }
       if (element) {
-        var select = typeof element === 'string' ? document.querySelector(element) : element;
-        var inst = instances.get(select);
+        const select = typeof element === 'string' ? document.querySelector(element) : element;
+        const inst = instances.get(select);
         if (inst) inst.applyTheme(themeName);
       } else {
-        document.querySelectorAll('select[stylish-select]').forEach(function (sel) {
-          var inst = instances.get(sel);
+        document.querySelectorAll('select[stylish-select]').forEach((sel) => {
+          const inst = instances.get(sel);
           if (inst) inst.applyTheme(themeName);
         });
       }
     },
 
-    getTheme: function getTheme(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    getTheme(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       return inst ? inst.config.theme : null;
     },
 
-    setStyle: function setStyle(element, styleName) {
+    setStyle(element, styleName) {
       if (typeof element === 'string' && !document.querySelector(element)) {
         styleName = element;
         element = null;
       }
       if (element) {
-        var select = typeof element === 'string' ? document.querySelector(element) : element;
-        var inst = instances.get(select);
+        const select = typeof element === 'string' ? document.querySelector(element) : element;
+        const inst = instances.get(select);
         if (inst) inst.applyStyle(styleName);
       } else {
-        document.querySelectorAll('select[stylish-select]').forEach(function (sel) {
-          var inst = instances.get(sel);
+        document.querySelectorAll('select[stylish-select]').forEach((sel) => {
+          const inst = instances.get(sel);
           if (inst) inst.applyStyle(styleName);
         });
       }
     },
 
-    getStyle: function getStyle(element) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    getStyle(element) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       return inst ? inst.config.style : null;
     },
 
-    setAnimation: function setAnimation(element, animationConfig) {
-      var select = typeof element === 'string' ? document.querySelector(element) : element;
-      var inst = instances.get(select);
+    setAnimation(element, animationConfig) {
+      const select = typeof element === 'string' ? document.querySelector(element) : element;
+      const inst = instances.get(select);
       if (inst) {
         inst.config.animation = typeof animationConfig === 'string' ? {
           open: animationConfig,
           close: animationConfig,
           duration: 200,
-          easing: 'ease' } :
-        animationConfig;
+          easing: 'ease'
+        } : animationConfig;
       }
     },
 
-    registerTheme: function registerTheme(name, cssRules) {
-      var sanitizedName = name.toLowerCase().trim();
+    registerTheme(name, cssRules) {
+      const sanitizedName = name.toLowerCase().trim();
       VALID_THEMES.add(sanitizedName);
       registeredThemes.set(sanitizedName, cssRules);
       StyleInjector.inject("theme-" + sanitizedName, cssRules);
     },
 
-    registerStyle: function registerStyle(name, cssRules) {
-      var sanitizedName = name.toLowerCase().trim();
+    registerStyle(name, cssRules) {
+      const sanitizedName = name.toLowerCase().trim();
       VALID_STYLES.add(sanitizedName);
       registeredStyles.set(sanitizedName, cssRules);
       StyleInjector.inject("style-" + sanitizedName, cssRules);
     },
 
-    registerAnimation: function registerAnimation(name, transitionCSS) {
-      var sanitizedName = name.toLowerCase().trim();
+    registerAnimation(name, transitionCSS) {
+      const sanitizedName = name.toLowerCase().trim();
       VALID_ANIMATIONS.add(sanitizedName);
       registeredAnimations.set(sanitizedName, transitionCSS);
       StyleInjector.inject("anim-" + sanitizedName, transitionCSS);
-    } };
-
+    }
+  };
 
   // Perform dynamic auto-instantiation over active DOM structures matching selector properties
   if (typeof document !== 'undefined') {
     if (document.readyState !== 'loading') {
       StylishSelect.init();
     } else {
-      document.addEventListener('DOMContentLoaded', function () {
+      document.addEventListener('DOMContentLoaded', () => {
         StylishSelect.init();
       });
     }
 
     // High performance MutationObserver instance mapping dynamically appended selects
-    var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        mutation.addedNodes.forEach(function (node) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
           if (node.nodeType === 1) {
             if (node.matches && node.matches('select[stylish-select]')) {
               StylishSelect.create(node);
             }
             if (node.querySelectorAll) {
-              node.querySelectorAll('select[stylish-select]').forEach(function (select) {
+              node.querySelectorAll('select[stylish-select]').forEach((select) => {
                 StylishSelect.create(select);
               });
             }
