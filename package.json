@@ -8,12 +8,12 @@
   "style": "dist/stylishselect.css",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pro-Bandey/StylishSelect.git"
+    "url": "git+https://github.com/MainRoute-Core/StylishSelect.git"
   },
   "bugs": {
-    "url": "https://github.com/Pro-Bandey/StylishSelect/issues"
+    "url": "https://github.com/MainRoute-Core/StylishSelect/issues"
   },
-  "homepage": "https://github.com/Pro-Bandey/StylishSelect#readme",
+  "homepage": "https://github.com/MainRoute-Core/StylishSelect#readme",
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
