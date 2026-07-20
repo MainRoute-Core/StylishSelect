@@ -1,6 +1,6 @@
 {
   "name": "stylishselect",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A modular, highly accessible, and performance-oriented replacement for native HTML single select elements written in vanilla ES6.",
   "license": "GPL-v3.0",
   "author": {
